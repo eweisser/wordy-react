@@ -1,38 +1,110 @@
 .App {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-template-rows: repeat(5, auto);
+  height: 100vh;
+  width: 100vw;
+  background-color: #fc0;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  color: #830;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.LeftFrame {
+  /* background-color: #f003; */
+  font-size: 72px;
+  height: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.RightFrame {
+  /* background-color: #8c88; */
+  border-left: 10px solid brown;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#start-menu-container {
+  display: grid;
+  font-weight: 600;
+  grid-template-rows: repeat(5, auto);
+  /* background-color: #f001; */
+  height: 100%;
+  width: 100%;
+}
+
+#start-menu-top-blank {
+  grid-row: 1 / 2;
+}
+
+#start-menu-1 {
+  /* background-color: #0f02; */
+  grid-row: 2 / 3;
+}
+
+#start-menu-2 {
+  grid-row: 3 / 4;
+}
+
+#start-menu-3 {
+  grid-row: 4 / 5;
+}
+
+#start-menu-bottom-blank {
+  grid-row: 5 / 6;
+}
+
+#ai-menu-container {
+  /* background-color: #f002; */
+  display: grid;
+  padding-top: 50px;
+  width: 100%;
+}
+
+.ai-menu-button {
+  /* background-color: #0f02; */
+  text-align: left;
+  font-size: 48px;
+  font-weight: 600;
+  padding-left: 50px;
+}
+
+#game {
+  /* background-color: #0f04; */
+  font-size: 24pt;
+  font-weight: 700;
+  height: 100%;
+  width: 100%;
+  /* padding: 30px; */
+}
+
+.compDialogueContainer {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+.compDialogue {
+  background-color: #fffe;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.playerInputContainer {
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+
+.playerInput {
+  background-color: #fffe;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
 }
