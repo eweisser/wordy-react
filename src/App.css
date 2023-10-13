@@ -91,7 +91,8 @@
 }
 
 .compDialogue {
-  background-color: #fffe;
+  /* background-color: #fffe; */
+  background-color: #0f03;
   border-radius: 20px;
   margin: 20px;
   padding: 20px;
@@ -103,7 +104,8 @@
 }
 
 .playerInput {
-  background-color: #fffe;
+  /* background-color: #fffe; */
+  background-color: #f002;
   border-radius: 20px;
   margin: 20px;
   padding: 20px;
