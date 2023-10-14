@@ -8,26 +8,26 @@ const Game = ({sendActiveAi}) => {
     // const dayOrNight = data.weather[0].icon[2] + "Time";
     // document.body.setAttribute('class', dayOrNight);
 
-    const dialogueBoxArray = ["Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..."];
+    // const dialogueBoxArray = ["Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..."];
 
     const [currentUserInput, setCurrentUserInput] = useState("...");
     const [whoGoesFirst, setWhoGoesFirst] = useState(null);
     const [allDialogues, setAllDialogues] = useState(["Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..."]);
+    const [gameStage, setGameStage] = useState("decide who goes first");
 
     const handleKeyDown = (event) => {
-        if ("12".includes(event.key)) {
-            setCurrentUserInput(event.key);
-            // console.log(event.key);
-        } else if (event.key === "Enter") {
-            // dialogueBoxArray.push("new");
-            // console.log(dialogueBoxArray);
-            setAllDialogues(allDialogues.concat(["new"]) );
-            // console.log(allDialogues);
+        if (gameStage === "decide who goes first") {
+            if ("12".includes(event.key)) {
+                setAllDialogues(allDialogues.slice(0,1).concat(event.key) );
+            } else if (event.key === "Enter") {
+                if (allDialogues[allDialogues.length - 1] === "1") {
+                    setAllDialogues(allDialogues.concat(["Okay, you'll go first. Enter your guess whenever you're ready."]) );
+                } else if (allDialogues[allDialogues.length - 1] === "2") {
+                    setAllDialogues(allDialogues.concat(["Okay, I'll go first. Let's see..."]) );
+                }
+            }
         }
-        // if ("1234567890.+-*/()^".includes(event.key)) {
-        //   sendExpressionToDisplay(event.key);
-        // }
-      };
+      };    // end of handleKeyDown
 
     const whoGoesFirstInput = useCallback((inputElement) => {
         if (inputElement) {
@@ -36,7 +36,7 @@ const Game = ({sendActiveAi}) => {
     }, []);
 
     const makeDialogueBox = (item) => {
-        const itemNumber = dialogueBoxArray.indexOf(item);
+        const itemNumber = allDialogues.indexOf(item);
         if (itemNumber % 2 === 0) {
             // console.log(item);
             return <div key={itemNumber} className="compDialogueContainer">

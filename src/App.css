@@ -1,15 +1,15 @@
 .App {
+  align-items: center;
+  background-color: #fc0;
+  color: #830;
   display: grid;
   grid-template-columns: 75% 25%;
   grid-template-rows: repeat(5, auto);
   height: 100vh;
-  width: 100vw;
-  background-color: #fc0;
-  min-height: 100vh;
-  align-items: center;
   justify-content: center;
-  color: #830;
+  min-height: 100vh;
   text-align: center;
+  width: 100vw;
 }
 
 .LeftFrame {
@@ -24,11 +24,20 @@
 
 .RightFrame {
   /* background-color: #8c88; */
-  border-left: 10px solid brown;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.RightFrame:after {
+  background: #830;
+  content: "";
+  height: 70%;
+  left: 75%;
+  position: absolute;
+  top: 15%;
+  width: 3px;
 }
 
 #start-menu-container {
@@ -81,8 +90,13 @@
   font-size: 24pt;
   font-weight: 700;
   height: 100%;
+  overflow: auto;
   width: 100%;
   /* padding: 30px; */
+}
+
+div:focus {
+  outline: none;
 }
 
 .compDialogueContainer {
@@ -91,8 +105,8 @@
 }
 
 .compDialogue {
-  /* background-color: #fffe; */
-  background-color: #0f03;
+  background-color: #fffb;
+  /* background-color: #0f03; */
   border-radius: 20px;
   margin: 20px;
   padding: 20px;
@@ -105,7 +119,7 @@
 
 .playerInput {
   /* background-color: #fffe; */
-  background-color: #f002;
+  background-color: #fffb;
   border-radius: 20px;
   margin: 20px;
   padding: 20px;
