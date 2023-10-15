@@ -1,7 +1,7 @@
 import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
-import { createElement } from 'react';
+import { LEXICON } from './lexicon.js';
 
 const Game = ({sendActiveAi}) => {
 
@@ -21,11 +21,18 @@ const Game = ({sendActiveAi}) => {
                 setAllDialogues(allDialogues.slice(0,1).concat(event.key) );
             } else if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1] === "1") {
-                    setAllDialogues(allDialogues.concat(["Okay, you'll go first. Enter your guess whenever you're ready."]) );
+                    setAllDialogues(allDialogues.concat(["Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
+                    setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1] === "2") {
                     setAllDialogues(allDialogues.concat(["Okay, I'll go first. Let's see..."]) );
+                    setGameStage("computerGuess");
                 }
             }
+        } else if (gameStage === "userGuess") {
+
+        } else if (gameStage === "computerGuess") {
+            const computerGuess = LEXICON[(Math.floor(Math.random()*LEXICON.length))];
+            setAllDialogues(allDialogues.concat(["My guess is "+computerGuess.toUpperCase()]) );
         }
       };    // end of handleKeyDown
 

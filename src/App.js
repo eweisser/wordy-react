@@ -21,9 +21,9 @@ function App() {
 
         {/* {aiMenuAppear && <AIMenu sendAi={(chosenAi) => {setAiMenuAppear(false); setGameAppear(true); alert(chosenAi)}} />} */}
         {aiMenuAppear && <AIMenu>
-          <AIMenuButton AiName="Andrew" pickAi={() => {setActiveAi("Andrew"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
-          <AIMenuButton AiName="Bianca" pickAi={() => {setActiveAi("Bianca"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
-          <AIMenuButton AiName="Charlie" pickAi={() => {setActiveAi("Charlie"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Ashley" pickAi={() => {setActiveAi("Ashley"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Ben" pickAi={() => {setActiveAi("Ben"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Chloe" pickAi={() => {setActiveAi("Chloe"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
         {gameAppear && <Game sendActiveAi={activeAi} />}
