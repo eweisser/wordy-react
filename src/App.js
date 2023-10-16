@@ -1,4 +1,4 @@
-import { LEXICON } from './components/lexicon.js';
+// import { LEXICON } from './components/lexicon.js';
 import StartMenu from './components/start-menu.js';
 import AIMenu from './components/AI-menu.js';
 import Game from './components/game.js';

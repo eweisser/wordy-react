@@ -8,11 +8,9 @@ const Game = ({sendActiveAi}) => {
     // const dayOrNight = data.weather[0].icon[2] + "Time";
     // document.body.setAttribute('class', dayOrNight);
 
-    // const dialogueBoxArray = ["Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..."];
-
-    const [currentUserInput, setCurrentUserInput] = useState("...");
-    const [whoGoesFirst, setWhoGoesFirst] = useState(null);
-    const [allDialogues, setAllDialogues] = useState(["Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..."]);
+    // const [currentUserInput, setCurrentUserInput] = useState("...");
+    // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
+    const [allDialogues, setAllDialogues] = useState([ "!Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
     const [gameStage, setGameStage] = useState("decide who goes first");
 
     const handleKeyDown = (event) => {
@@ -21,20 +19,27 @@ const Game = ({sendActiveAi}) => {
                 setAllDialogues(allDialogues.slice(0,1).concat(event.key) );
             } else if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1] === "1") {
-                    setAllDialogues(allDialogues.concat(["Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
+                    setAllDialogues(allDialogues.concat(["!Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1] === "2") {
-                    setAllDialogues(allDialogues.concat(["Okay, I'll go first. Let's see..."]) );
-                    setGameStage("computerGuess");
+                    setAllDialogues(allDialogues.concat(["!Okay, I'll go first. Let's see...","!My guess is "+computerPicksAWord().toUpperCase()],"...") );
+                    setGameStage("userGuess");
                 }
             }
         } else if (gameStage === "userGuess") {
+            setAllDialogues(allDialogues.concat(["..."]) );
 
         } else if (gameStage === "computerGuess") {
-            const computerGuess = LEXICON[(Math.floor(Math.random()*LEXICON.length))];
-            setAllDialogues(allDialogues.concat(["My guess is "+computerGuess.toUpperCase()]) );
+            computerMakesAGuess();
         }
       };    // end of handleKeyDown
+
+    const computerPicksAWord = () => {
+        return LEXICON[(Math.floor(Math.random()*LEXICON.length))];
+    }
+    const computerMakesAGuess = () => {
+        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksAWord().toUpperCase()]) );
+    }
 
     const whoGoesFirstInput = useCallback((inputElement) => {
         if (inputElement) {
@@ -43,12 +48,13 @@ const Game = ({sendActiveAi}) => {
     }, []);
 
     const makeDialogueBox = (item) => {
+        console.log(item);
         const itemNumber = allDialogues.indexOf(item);
-        if (itemNumber % 2 === 0) {
+        if (item[0] === "!") {
             // console.log(item);
             return <div key={itemNumber} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
-                        <div className="compDialogue">{item}</div>
+                        <div className="compDialogue">{item.slice(1)}</div>
                     </div>
         } else {
             // console.log(item);
