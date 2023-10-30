@@ -1,6 +1,7 @@
 import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
+import { useEffect } from 'react';
 import { LEXICON } from './lexicon.js';
 
 const Game = ({sendActiveAi}) => {
@@ -13,10 +14,15 @@ const Game = ({sendActiveAi}) => {
     const [allDialogues, setAllDialogues] = useState([ "!Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
     const [gameStage, setGameStage] = useState("decide who goes first");
 
+    useEffect(() => {
+
+    }
+    );
+
     const handleKeyDown = (event) => {
         if (gameStage === "decide who goes first") {
             if ("12".includes(event.key)) {
-                setAllDialogues(allDialogues.slice(0,1).concat(event.key) );
+                setAllDialogues(allDialogues.slice(0,1).concat(event.key) );     // if the user enters "1" or "2", make that the content of the most recent box
             } else if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1] === "1") {
                     setAllDialogues(allDialogues.concat(["!Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
@@ -28,8 +34,14 @@ const Game = ({sendActiveAi}) => {
             }
         } else if (gameStage === "userGuess") {
             setAllDialogues(allDialogues.concat(["..."]) );
+            // if (!event.key === "Enter") {
+                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+            // }
+            if (event.key === "Enter") {
+                computerMakesAGuess();
+            }
 
-        } else if (gameStage === "computerGuess") {
+        } else if (gameStage === "computerGuess") {         // do we need this? maybe delete
             computerMakesAGuess();
         }
       };    // end of handleKeyDown
@@ -38,7 +50,7 @@ const Game = ({sendActiveAi}) => {
         return LEXICON[(Math.floor(Math.random()*LEXICON.length))];
     }
     const computerMakesAGuess = () => {
-        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksAWord().toUpperCase()]) );
+        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksAWord().toUpperCase(),"..."]) );
     }
 
     const whoGoesFirstInput = useCallback((inputElement) => {
