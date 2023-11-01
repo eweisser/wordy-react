@@ -91,7 +91,9 @@
   font-weight: 700;
   height: 100%;
   overflow: auto;
+  scrollbar-width: none;
   width: 100%;
+  -ms-overflow-style: none;
   /* padding: 30px; */
 }
 

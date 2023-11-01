@@ -28,29 +28,49 @@ const Game = ({sendActiveAi}) => {
                     setAllDialogues(allDialogues.concat(["!Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1] === "2") {
-                    setAllDialogues(allDialogues.concat(["!Okay, I'll go first. Let's see...","!My guess is "+computerPicksAWord().toUpperCase()],"...") );
-                    setGameStage("userGuess");
+                    setAllDialogues(allDialogues.concat(["!Okay, I'll go first. Let's see...","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                    setGameStage("computerGuess");
                 }
             }
         } else if (gameStage === "userGuess") {
-            setAllDialogues(allDialogues.concat(["..."]) );
-            // if (!event.key === "Enter") {
-                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
-            // }
+            // setAllDialogues(allDialogues.concat(["..."]) );
+            if (event.key.charCodeAt(0) >= 97  && event.key.charCodeAt(0) <= 122) {
+                if (allDialogues.slice(allDialogues.length-1) == "...") {
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+                } else {
+                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(buildingUserGuess) );
+                }
+            }
             if (event.key === "Enter") {
-                computerMakesAGuess();
+                var userLetterCorrectNumber = computerEvaluatesUserGuess();
+                // alert(userLetterCorrectNumber);
+                setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                setGameStage("computerGuess");
             }
 
         } else if (gameStage === "computerGuess") {         // do we need this? maybe delete
-            computerMakesAGuess();
+            // computerMakesAGuess();
+            setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+            if (event.key === "Enter") {
+                if (allDialogues[allDialogues.length - 1].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1].charCodeAt(0) <= 53) {
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!Okay, what's your guess?","..."]) );
+                    setGameStage("userGuess");
+                }
+            }
         }
       };    // end of handleKeyDown
 
-    const computerPicksAWord = () => {
+    const computerEvaluatesUserGuess = () => {
+        // alert("Here, the computer will figure out how many letters the user has matched.");
+        return 2;
+    }
+
+    const computerPicksGuessWord = () => {
         return LEXICON[(Math.floor(Math.random()*LEXICON.length))];
     }
     const computerMakesAGuess = () => {
-        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksAWord().toUpperCase(),"..."]) );
+        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
     }
 
     const whoGoesFirstInput = useCallback((inputElement) => {
