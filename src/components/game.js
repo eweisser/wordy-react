@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { LEXICON } from './lexicon.js';
+import { MINILEX } from './minilex.js';
 
 const Game = ({sendActiveAi}) => {
 
@@ -32,13 +33,12 @@ const Game = ({sendActiveAi}) => {
                     setGameStage("computerGuess");
                 }
             }
-        } else if (gameStage === "userGuess") {
-            // setAllDialogues(allDialogues.concat(["..."]) );
+        } else if (gameStage === "userGuess") {         // user's 5 letter guess
             if (event.key.charCodeAt(0) >= 97  && event.key.charCodeAt(0) <= 122) {
                 if (allDialogues.slice(allDialogues.length-1) == "...") {
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key.toUpperCase()) );
                 } else {
-                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key
+                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key.toUpperCase();
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(buildingUserGuess) );
                 }
             }
@@ -49,9 +49,10 @@ const Game = ({sendActiveAi}) => {
                 setGameStage("computerGuess");
             }
 
-        } else if (gameStage === "computerGuess") {         // do we need this? maybe delete
-            // computerMakesAGuess();
-            setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+        } else if (gameStage === "computerGuess") {         // user's numerical 1-5 response to computer's guess
+            if (event.key.charCodeAt(0) >= 49 && event.key.charCodeAt(0) <= 53) {
+                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+            }
             if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1].charCodeAt(0) <= 53) {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!Okay, what's your guess?","..."]) );
@@ -67,7 +68,7 @@ const Game = ({sendActiveAi}) => {
     }
 
     const computerPicksGuessWord = () => {
-        return LEXICON[(Math.floor(Math.random()*LEXICON.length))];
+        return MINILEX[(Math.floor(Math.random()*MINILEX.length))];
     }
     const computerMakesAGuess = () => {
         setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
