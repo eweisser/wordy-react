@@ -7,18 +7,19 @@ import { MINILEX } from './minilex.js';
 
 const Game = ({sendActiveAi}) => {
 
-    // const dayOrNight = data.weather[0].icon[2] + "Time";
-    // document.body.setAttribute('class', dayOrNight);
-
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
     const [allDialogues, setAllDialogues] = useState([ "!Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
     const [gameStage, setGameStage] = useState("decide who goes first");
+    const [computerSecretWord, setComputerSecretWord] = useState(".....");
 
-    useEffect(() => {
+    // useEffect(() => {
 
+    // }
+    // );
+    if (computerSecretWord === ".....") {
+        setComputerSecretWord(MINILEX[(Math.floor(Math.random()*MINILEX.length))]);
     }
-    );
 
     const handleKeyDown = (event) => {
         if (gameStage === "decide who goes first") {
@@ -34,8 +35,8 @@ const Game = ({sendActiveAi}) => {
                 }
             }
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
-            if (event.key.charCodeAt(0) >= 97  && event.key.charCodeAt(0) <= 122) {
-                if (allDialogues.slice(allDialogues.length-1) == "...") {
+            if ( (event.key.charCodeAt(0) >= 97  && event.key.charCodeAt(0) <= 122) || (event.key.charCodeAt(0) >= 65  && event.key.charCodeAt(0) <= 90) ) {
+                if (allDialogues.slice(allDialogues.length-1) === "...") {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key.toUpperCase()) );
                 } else {
                     var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key.toUpperCase();
@@ -43,11 +44,22 @@ const Game = ({sendActiveAi}) => {
                 }
             }
             if (event.key === "Enter") {
-                var userLetterCorrectNumber = computerEvaluatesUserGuess();
+                var userGuessWord = allDialogues.slice(allDialogues.length-1)[0];
+                if (MINILEX.includes(userGuessWord.toLowerCase() )) {
+                    var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
+                    if (userGuessWord.toLowerCase() === computerSecretWord) {
+                        setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!"]));
+                    } else {
+                        setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                    }
+                        setGameStage("computerGuess");
+                } else {
+                    setAllDialogues(allDialogues.concat(["!Sorry, that word isn't in my dictionary. Try a different word.","..."]) );
+                }
                 // alert(userLetterCorrectNumber);
-                setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
-                setGameStage("computerGuess");
             }
+
+
 
         } else if (gameStage === "computerGuess") {         // user's numerical 1-5 response to computer's guess
             if (event.key.charCodeAt(0) >= 49 && event.key.charCodeAt(0) <= 53) {
@@ -62,9 +74,16 @@ const Game = ({sendActiveAi}) => {
         }
       };    // end of handleKeyDown
 
-    const computerEvaluatesUserGuess = () => {
+    const computerEvaluatesUserGuess = (userGuessWord) => {
+        var correctLetterRunningSum = 0;
+        for (let letter of userGuessWord) {
+            if (computerSecretWord.toUpperCase().includes(letter)) {
+                correctLetterRunningSum = correctLetterRunningSum + 1;
+            }
+        }
+        // alert(userGuessWord);
         // alert("Here, the computer will figure out how many letters the user has matched.");
-        return 2;
+        return correctLetterRunningSum;
     }
 
     const computerPicksGuessWord = () => {
