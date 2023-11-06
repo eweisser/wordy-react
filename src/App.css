@@ -126,3 +126,18 @@ div:focus {
   margin: 20px;
   padding: 20px;
 }
+
+#fox {
+  /* background-color: #f002; */
+  border: 2px dashed #f00;
+  height: 20vw;
+  width: 20vw;
+}
+
+#alphabet {
+  background-color: #0f02;
+  height: 20vw;
+  position: absolute;
+  top: 50%;
+  width: 20vw;
+}

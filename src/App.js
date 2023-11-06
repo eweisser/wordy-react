@@ -2,6 +2,8 @@
 import StartMenu from './components/start-menu.js';
 import AIMenu from './components/AI-menu.js';
 import Game from './components/game.js';
+import Fox from './components/fox.js';
+import Alphabet from './components/alphabet.js';
 import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
@@ -11,6 +13,8 @@ function App() {
   const [startMenuAppear, setStartMenuAppear] = useState(true);
   const [aiMenuAppear, setAiMenuAppear] = useState(false);
   const [gameAppear, setGameAppear] = useState(false);
+  const [foxAppear, setFoxAppear] = useState(true);
+  const [alphabetAppear, setAlphabetAppear] = useState(true);
 
   const [activeAi, setActiveAi] = useState(null);
 
@@ -29,8 +33,9 @@ function App() {
         {gameAppear && <Game sendActiveAi={activeAi} />}
       </div>
       <div className="RightFrame">
+        {foxAppear && <Fox />}
+        {alphabetAppear && <Alphabet />}
       </div>
-      
     </div>
   );
 }

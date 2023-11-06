@@ -35,14 +35,30 @@ const Game = ({sendActiveAi}) => {
                 }
             }
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
-            if ( (event.key.charCodeAt(0) >= 97  && event.key.charCodeAt(0) <= 122) || (event.key.charCodeAt(0) >= 65  && event.key.charCodeAt(0) <= 90) ) {
-                if (allDialogues.slice(allDialogues.length-1) === "...") {
+
+            if (event.key.length == 1) {
+                let mostRecentBox = allDialogues.slice(allDialogues.length-1);
+                if (mostRecentBox[0] === "...") {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key.toUpperCase()) );
                 } else {
                     var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key.toUpperCase();
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(buildingUserGuess) );
                 }
             }
+
+            if (event.key === "Backspace") {
+                let mostRecentBox = allDialogues.slice(allDialogues.length-1);
+                // alert(mostRecentBox);
+                // alert(mostRecentBox[0].length);
+                if (mostRecentBox[0] === "...") {
+                } else if (mostRecentBox[0].length[0] === 1) {
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat("...") );
+                } else {
+                    var shorteningUserGuess = mostRecentBox[0].slice(0,mostRecentBox[0].length-1);
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(shorteningUserGuess) );
+                }
+            }
+
             if (event.key === "Enter") {
                 var userGuessWord = allDialogues.slice(allDialogues.length-1)[0];
                 if (MINILEX.includes(userGuessWord.toLowerCase() )) {
