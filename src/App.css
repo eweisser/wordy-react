@@ -87,7 +87,7 @@
 
 #game {
   /* background-color: #0f04; */
-  font-size: 24pt;
+  font-size: 12pt;
   font-weight: 700;
   height: 100%;
   overflow: auto;
@@ -110,8 +110,8 @@ div:focus {
   background-color: #fffb;
   /* background-color: #0f03; */
   border-radius: 20px;
-  margin: 20px;
-  padding: 20px;
+  margin: 10px 20px;
+  padding: 10px;
 }
 
 .playerInputContainer {
@@ -123,15 +123,15 @@ div:focus {
   /* background-color: #fffe; */
   background-color: #fffb;
   border-radius: 20px;
-  margin: 20px;
-  padding: 20px;
+  margin: 10px 20px;
+  padding: 10px;
 }
 
 #fox {
   /* background-color: #f002; */
-  border: 2px dashed #f00;
+  border-right: 5px dashed #f00;
   height: 20vw;
-  width: 20vw;
+  width: 24vw;
 }
 
 #alphabet {

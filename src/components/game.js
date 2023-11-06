@@ -51,7 +51,7 @@ const Game = ({sendActiveAi}) => {
                 // alert(mostRecentBox);
                 // alert(mostRecentBox[0].length);
                 if (mostRecentBox[0] === "...") {
-                } else if (mostRecentBox[0].length[0] === 1) {
+                } else if (mostRecentBox[0].length === 1) {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat("...") );
                 } else {
                     var shorteningUserGuess = mostRecentBox[0].slice(0,mostRecentBox[0].length-1);
@@ -66,7 +66,11 @@ const Game = ({sendActiveAi}) => {
                     if (userGuessWord.toLowerCase() === computerSecretWord) {
                         setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!"]));
                     } else {
-                        setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                        if (userLetterCorrectNumber === 1) {
+                            setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letter.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                        } else {
+                            setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                        }
                     }
                         setGameStage("computerGuess");
                 } else {
