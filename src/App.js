@@ -7,6 +7,7 @@ import Alphabet from './components/alphabet.js';
 import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
+import ScratchPadLetter from './components/scratch-pad-letter.js';
 
 function App() {
 
@@ -23,7 +24,6 @@ function App() {
       <div className="LeftFrame">
         {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)} } />}
 
-        {/* {aiMenuAppear && <AIMenu sendAi={(chosenAi) => {setAiMenuAppear(false); setGameAppear(true); alert(chosenAi)}} />} */}
         {aiMenuAppear && <AIMenu>
           <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
           <AIMenuButton AiName="Ben" pickAi={() => {setActiveAi("Ben"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
@@ -31,10 +31,46 @@ function App() {
         </AIMenu>}
 
         {gameAppear && <Game sendActiveAi={activeAi} />}
+
       </div>
+
       <div className="RightFrame">
+
         {foxAppear && <Fox />}
-        {alphabetAppear && <Alphabet />}
+
+        {alphabetAppear && <Alphabet>
+          <ScratchPadLetter>A</ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+          <ScratchPadLetter></ScratchPadLetter>
+
+          <ScratchPadLetter>Z</ScratchPadLetter>
+        </Alphabet>}
       </div>
     </div>
   );

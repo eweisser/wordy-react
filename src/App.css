@@ -129,15 +129,15 @@ div:focus {
 
 #fox {
   /* background-color: #f002; */
-  border-right: 5px dashed #f00;
+  border-bottom: 1px dashed #f00;
   height: 20vw;
-  width: 24vw;
+  width: 20vw;
+  margin: auto;
 }
 
 #alphabet {
   background-color: #0f02;
   height: 20vw;
-  position: absolute;
-  top: 50%;
+  margin: auto;
   width: 20vw;
 }
