@@ -135,9 +135,22 @@ div:focus {
   margin: auto;
 }
 
-#alphabet {
-  background-color: #0f02;
+#scratchpad-container {
+  align-items: center;
+  /* background-color: #0f02; */
+  border: 1px dashed #00f;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(6, 1fr);
   height: 20vw;
   margin: auto;
+  margin-top: 50px;
   width: 20vw;
+}
+
+.scratch-pad-letter-button {
+  /* background-color: #0f02; */
+  /* border: 1px solid #0002; */
+  font-size: 1.4vw;
+  font-weight: 600;
 }

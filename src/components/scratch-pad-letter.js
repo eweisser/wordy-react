@@ -1,10 +1,10 @@
 import '../App.css';
 
-const ScratchPadLetter = ({AiName, pickAi}) => {
+const ScratchPadLetter = ({Letter, cycleLetterButton}) => {
 
     return (
         // <div className="ai-menu-button" onPress={() => pickAi({AiName})}>{AiName}</div>
-        <div className="ai-menu-button" onClick={() => pickAi()}>{AiName}</div>
+        <div className="scratch-pad-letter-button" onClick={() => cycleLetterButton()}>{Letter}</div>
     );
 }
 
