@@ -129,7 +129,7 @@ div:focus {
 
 #fox {
   /* background-color: #f002; */
-  border-bottom: 1px dashed #f00;
+  /* border-bottom: 1px dashed #f00; */
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -138,7 +138,7 @@ div:focus {
 #scratchpad-container {
   align-items: center;
   /* background-color: #0f02; */
-  border: 1px dashed #00f;
+  /* border: 1px dashed #00f; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(6, 1fr);
@@ -148,9 +148,28 @@ div:focus {
   width: 20vw;
 }
 
-.scratch-pad-letter-button {
+.letter_neutral {
   /* background-color: #0f02; */
   /* border: 1px solid #0002; */
   font-size: 1.4vw;
-  font-weight: 600;
+  font-weight: 700;
+  user-select: none;
+}
+
+.letter_eliminated {
+  /* background-color: #0f02; */
+  /* border: 1px solid #0002; */
+  color: #8304;
+  font-size: 1.4vw;
+  font-weight: 700;
+  user-select: none;
+}
+
+.letter_proven {
+  background-color: #fffb;
+  /* border: 1px solid #0002; */
+  /* color: #f00; */
+  font-size: 1.4vw;
+  font-weight: 700;
+  user-select: none;
 }
