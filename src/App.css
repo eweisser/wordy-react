@@ -166,7 +166,8 @@ div:focus {
 }
 
 .letter_proven {
-  background-color: #fffb;
+  /* background-color: #fffb; */
+  background-image: radial-gradient(circle closest-side,#fffb 97%, #fff0 99%);
   /* border: 1px solid #0002; */
   /* color: #f00; */
   font-size: 1.4vw;
