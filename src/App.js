@@ -15,7 +15,7 @@ function App() {
   const [aiMenuAppear, setAiMenuAppear] = useState(false);
   const [gameAppear, setGameAppear] = useState(false);
   const [foxAppear, setFoxAppear] = useState(true);
-  const [alphabetAppear, setAlphabetAppear] = useState(true);
+  const [alphabetAppear, setAlphabetAppear] = useState(false);
 
   const [activeAi, setActiveAi] = useState(null);
 
@@ -25,9 +25,9 @@ function App() {
         {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)} } />}
 
         {aiMenuAppear && <AIMenu>
-          <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
-          <AIMenuButton AiName="Ben" pickAi={() => {setActiveAi("Ben"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
-          <AIMenuButton AiName="Chloe" pickAi={() => {setActiveAi("Chloe"); setAiMenuAppear(false); setGameAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Ben" pickAi={() => {setActiveAi("Ben"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Chloe" pickAi={() => {setActiveAi("Chloe"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
         {gameAppear && <Game sendActiveAi={activeAi} />}
@@ -39,7 +39,6 @@ function App() {
         {foxAppear && <Fox />}
 
         {alphabetAppear && <ScratchPad>
-          {/* <ScratchPadLetter Letter="A" cycleLetterButton={setActiveAi("Amy")}></ScratchPadLetter> */}
           <ScratchPadLetter Letter="A"></ScratchPadLetter>
           <ScratchPadLetter Letter="B"></ScratchPadLetter>
           <ScratchPadLetter Letter="C"></ScratchPadLetter>

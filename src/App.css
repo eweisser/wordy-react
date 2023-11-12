@@ -110,7 +110,7 @@ div:focus {
   background-color: #fffb;
   /* background-color: #0f03; */
   border-radius: 20px;
-  margin: 10px 20px;
+  margin: 10px 4vw;
   padding: 10px;
 }
 
@@ -123,7 +123,20 @@ div:focus {
   /* background-color: #fffe; */
   background-color: #fffb;
   border-radius: 20px;
-  margin: 10px 20px;
+  margin: 10px 4vw;
+  padding: 10px;
+}
+
+.playerOptionBoxesContainer {
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+
+.playerOptionBox {
+  /* background-color: #fffe; */
+  background-color: #fffb;
+  border-radius: 20px;
+  margin: 10px 4vw;
   padding: 10px;
 }
 
@@ -159,7 +172,7 @@ div:focus {
 .letter_eliminated {
   /* background-color: #0f02; */
   /* border: 1px solid #0002; */
-  color: #8304;
+  color: #8303;
   font-size: 1.4vw;
   font-weight: 700;
   user-select: none;

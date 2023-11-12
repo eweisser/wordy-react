@@ -1,8 +1,8 @@
 import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
-import { useEffect } from 'react';
-import { LEXICON } from './lexicon.js';
+// import { useEffect } from 'react';
+// import { LEXICON } from './lexicon.js';
 import { MINILEX } from './minilex.js';
 
 const Game = ({sendActiveAi}) => {
@@ -13,10 +13,6 @@ const Game = ({sendActiveAi}) => {
     const [gameStage, setGameStage] = useState("decide who goes first");
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
 
-    // useEffect(() => {
-
-    // }
-    // );
     if (computerSecretWord === ".....") {
         setComputerSecretWord(MINILEX[(Math.floor(Math.random()*MINILEX.length))]);
     }
@@ -36,7 +32,7 @@ const Game = ({sendActiveAi}) => {
             }
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
 
-            if (event.key.length == 1) {
+            if (event.key.length === 1) {
                 let mostRecentBox = allDialogues.slice(allDialogues.length-1);
                 if (mostRecentBox[0] === "...") {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key.toUpperCase()) );
@@ -64,7 +60,7 @@ const Game = ({sendActiveAi}) => {
                 if (MINILEX.includes(userGuessWord.toLowerCase() )) {
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
                     if (userGuessWord.toLowerCase() === computerSecretWord) {
-                        setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!"]));
+                        setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!","!What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         if (userLetterCorrectNumber === 1) {
                             setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letter.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
@@ -76,7 +72,6 @@ const Game = ({sendActiveAi}) => {
                 } else {
                     setAllDialogues(allDialogues.concat(["!Sorry, that word isn't in my dictionary. Try a different word.","..."]) );
                 }
-                // alert(userLetterCorrectNumber);
             }
 
 
@@ -122,14 +117,19 @@ const Game = ({sendActiveAi}) => {
     const makeDialogueBox = (item) => {
         console.log(item);
         const itemNumber = allDialogues.indexOf(item);
-        if (item[0] === "!") {
-            // console.log(item);
+        if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={itemNumber} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
                         <div className="compDialogue">{item.slice(1)}</div>
                     </div>
-        } else {
-            // console.log(item);
+        } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
+            return <div key={itemNumber} className="playerOptionBoxesContainer">
+                        <div className="playerOptionBox">{item.slice(1)}</div>
+                        <div className="playerOptionBox">{item.slice(5)}</div>
+                        <div className="playerOptionBox">{item.slice(10)}</div>
+                        <div className="playerInputSpace"></div>
+                    </div>
+        } else {                        // if it doesn't start with "!" or "@", it's a player input box
             return <div key={itemNumber} className="playerInputContainer">
                         <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>{item}</div>
                         <div className="playerInputSpace"></div>
