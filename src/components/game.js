@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 // import { LEXICON } from './lexicon.js';
 import { MINILEX } from './minilex.js';
 
-const Game = ({sendActiveAi}) => {
+const Game = ({sendActiveAi, newGamePickAi}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
@@ -57,9 +57,10 @@ const Game = ({sendActiveAi}) => {
 
             if (event.key === "Enter") {
                 var userGuessWord = allDialogues.slice(allDialogues.length-1)[0];
-                if (MINILEX.includes(userGuessWord.toLowerCase() )) {
+                if (MINILEX.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
-                    if (userGuessWord.toLowerCase() === computerSecretWord) {
+                    if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
+                        setGameStage("gameOverUserWon");
                         setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!","!What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         if (userLetterCorrectNumber === 1) {
@@ -86,6 +87,11 @@ const Game = ({sendActiveAi}) => {
                     setGameStage("userGuess");
                 }
             }
+        } else if (gameStage === "game ended, before erasing") {
+            if (event.key === "Enter") {
+                setAllDialogues(["!Enter 1 if you want to go first, or 2 for me to go first.","..."]);
+                setGameStage("decide who goes first");
+            }
         }
       };    // end of handleKeyDown
 
@@ -108,6 +114,11 @@ const Game = ({sendActiveAi}) => {
         setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
     }
 
+    const restartGame = () => {
+        setGameStage("game ended, before erasing");
+        setAllDialogues(allDialogues.concat(["!Okay, press enter and I'll erase the previous game.","..."]) );
+    }
+
     const whoGoesFirstInput = useCallback((inputElement) => {
         if (inputElement) {
             inputElement.focus();
@@ -123,10 +134,10 @@ const Game = ({sendActiveAi}) => {
                         <div className="compDialogue">{item.slice(1)}</div>
                     </div>
         } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
-            return <div key={itemNumber} className="playerOptionBoxesContainer">
-                        <div className="playerOptionBox">{item.slice(1)}</div>
-                        <div className="playerOptionBox">{item.slice(5)}</div>
-                        <div className="playerOptionBox">{item.slice(10)}</div>
+            return <div key={itemNumber} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                        <div tabIndex="0" className="playerOptionBox" onKeyDown={handleKeyDown}>{item.split("/")[0].slice(1)}</div>
+                        <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item.split("/")[1]}</div>
+                        <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
                         <div className="playerInputSpace"></div>
                     </div>
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
@@ -144,18 +155,6 @@ const Game = ({sendActiveAi}) => {
             
             {mappedDialogueBoxes}
 
-            {/* <div className="compDialogueContainer">
-                <div className="compDialogueSpace"></div>
-                <div className="compDialogue">
-                    Hi, I'm {sendActiveAi}. Enter 1 if you want to go first, or 2 for me to go first.
-                </div>
-            </div>
-            <div className="playerInputContainer">
-                <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>
-                    {currentUserInput}
-                </div>
-                <div className="playerInputSpace"></div>
-            </div> */}
         </div>
     );
 }

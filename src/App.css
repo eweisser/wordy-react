@@ -128,16 +128,23 @@ div:focus {
 }
 
 .playerOptionBoxesContainer {
-  display: grid;
-  grid-template-columns: 75% 25%;
+  display: flex;
+  width: 100%;
 }
 
 .playerOptionBox {
   /* background-color: #fffe; */
-  background-color: #fffb;
+  background-color: #fff0;
+  border: 1px solid #830;
   border-radius: 20px;
-  margin: 10px 4vw;
+  margin: 10px 0vw 10px 4vw;
   padding: 10px;
+}
+
+.playerOptionBox:hover {
+  /* background-color: #fffe; */
+  background-color: #fffb;
+  border: 1px solid #fffb;
 }
 
 #fox {
