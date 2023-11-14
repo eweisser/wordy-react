@@ -20,7 +20,7 @@ const ScratchPadLetter = ({Letter}) => {
 
     return (
         // <div className="ai-menu-button" onPress={() => pickAi({AiName})}>{AiName}</div>
-        <div className={letterKnowledge} onClick={() => cycleLetterButton()}>{Letter}</div>
+        <div className={letterKnowledge} onClick={() => cycleLetterButton()}><div class="scratchpad-text">{Letter}</div></div>
     );
 }
 

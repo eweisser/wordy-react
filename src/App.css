@@ -173,6 +173,7 @@ div:focus {
   /* border: 1px solid #0002; */
   font-size: 1.4vw;
   font-weight: 700;
+  height: 100%;
   user-select: none;
 }
 
@@ -182,15 +183,23 @@ div:focus {
   color: #8303;
   font-size: 1.4vw;
   font-weight: 700;
+  height: 100%;
   user-select: none;
 }
 
 .letter_proven {
   /* background-color: #fffb; */
-  background-image: radial-gradient(circle closest-side,#fffb 97%, #fff0 99%);
+  /* background-image: radial-gradient(circle closest-side,#fffb 97%, #fff0 99%); */
+  background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
   /* border: 1px solid #0002; */
   /* color: #f00; */
+  height: 100%;
   font-size: 1.4vw;
   font-weight: 700;
+  text-align: center;
   user-select: none;
+}
+
+.scratchpad-text {
+  transform: translate(0%, 40%);
 }

@@ -9,6 +9,15 @@ import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
 import ScratchPadLetter from './components/scratch-pad-letter.js';
 
+// fix nose
+// implement fox reactions
+// AI actually tries to solve
+// save / load
+// help screen
+// minilex
+// other colors
+// clear scratchpad
+
 function App() {
 
   const [startMenuAppear, setStartMenuAppear] = useState(true);
