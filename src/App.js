@@ -5,24 +5,29 @@ import Game from './components/game.js';
 import Fox from './components/fox.js';
 import ScratchPad from './components/scratchpad.js';
 import './App.css';
+import './bkgd_gold.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
 import ScratchPadLetter from './components/scratch-pad-letter.js';
+import HowToPlay from './components/how-to-play.js';
 
 // fix nose
 // implement fox reactions
 // AI actually tries to solve
 // save / load
-// help screen
 // minilex
-// other colors
+// change fox color
 // clear scratchpad
+// options menu
+// mark numbers for rounds
+// auto-refocus
 
 function App() {
 
   const [startMenuAppear, setStartMenuAppear] = useState(true);
   const [aiMenuAppear, setAiMenuAppear] = useState(false);
   const [gameAppear, setGameAppear] = useState(false);
+  const [howToPlayAppear, setHowToPlayAppear] = useState(false);
   // const [foxAppear, setFoxAppear] = useState(true);
   const [alphabetAppear, setAlphabetAppear] = useState(false);
 
@@ -31,15 +36,17 @@ function App() {
   return (
     <div className="App">
       <div className="LeftFrame">
-        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)} } />}
+        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } />}
 
         {aiMenuAppear && <AIMenu>
           <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
           <AIMenuButton AiName="Ben" pickAi={() => {setActiveAi("Ben"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
-          <AIMenuButton AiName="Chloe" pickAi={() => {setActiveAi("Chloe"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
+          <AIMenuButton AiName="Clair" pickAi={() => {setActiveAi("Clair"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
         {gameAppear && <Game sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
+
+        {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
 
       </div>
 

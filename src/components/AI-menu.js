@@ -5,6 +5,7 @@ const AIMenu = ({children}) => {
 
     return (
         <div id="ai-menu-container">
+            Choose an AI
             {children}
         </div>
     );

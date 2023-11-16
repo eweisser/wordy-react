@@ -134,8 +134,8 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                         <div className="compDialogue">{item.slice(1)}</div>
                     </div>
         } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
-            return <div key={itemNumber} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                        <div tabIndex="0" className="playerOptionBox" onKeyDown={handleKeyDown}>{item.split("/")[0].slice(1)}</div>
+            return <div tabIndex="0" key={itemNumber} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                        <div className="playerOptionBox" onClick={restartGame}>{item.split("/")[0].slice(1)}</div>
                         <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item.split("/")[1]}</div>
                         <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
                         <div className="playerInputSpace"></div>

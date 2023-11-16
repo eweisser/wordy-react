@@ -1,0 +1,33 @@
+.App {
+  background-color: #f8b;
+  color: #704;
+}
+
+.RightFrame:after {
+  background: #704;
+}
+
+.compDialogue {
+  background-color: #fffa;
+}
+
+.playerInput {
+  background-color: #fffa;
+}
+
+.playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #704;
+}
+
+.letter_eliminated {
+  color: #7043;
+}
+
+.letter_proven {
+  background-image: radial-gradient(circle closest-side,#fffa 74%, #fff0 76%);
+}
+
+#fox {
+  stroke: #704;
+}

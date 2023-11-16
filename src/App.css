@@ -1,7 +1,5 @@
 .App {
   align-items: center;
-  background-color: #fc0;
-  color: #830;
   display: grid;
   grid-template-columns: 75% 25%;
   grid-template-rows: repeat(5, auto);
@@ -31,7 +29,6 @@
 }
 
 .RightFrame:after {
-  background: #830;
   content: "";
   height: 70%;
   left: 75%;
@@ -43,7 +40,7 @@
 #start-menu-container {
   display: grid;
   font-weight: 600;
-  grid-template-rows: repeat(5, auto);
+  grid-template-rows: repeat(6, auto);
   /* background-color: #f001; */
   height: 100%;
   width: 100%;
@@ -62,27 +59,42 @@
   grid-row: 3 / 4;
 }
 
-#start-menu-3 {
+#start-menu-how-to-play-button {
   grid-row: 4 / 5;
 }
 
-#start-menu-bottom-blank {
+#start-menu-options-button {
   grid-row: 5 / 6;
+}
+
+#start-menu-bottom-blank {
+  grid-row: 6 / 7;
 }
 
 #ai-menu-container {
   /* background-color: #f002; */
   display: grid;
+  font-size: 30px;
+  padding-left: 50px;
   padding-top: 50px;
+  text-align: left;
   width: 100%;
 }
 
 .ai-menu-button {
   /* background-color: #0f02; */
-  text-align: left;
   font-size: 48px;
   font-weight: 600;
+  padding-left: 10px;
+}
+
+#how-to-play-container {
+  font-size: 24px;
+  font-weight: 600;
   padding-left: 50px;
+  padding-top: 50px;
+  text-align: left;
+  width: 90%;
 }
 
 #game {
@@ -107,7 +119,6 @@ div:focus {
 }
 
 .compDialogue {
-  background-color: #fffb;
   /* background-color: #0f03; */
   border-radius: 20px;
   margin: 10px 4vw;
@@ -121,7 +132,6 @@ div:focus {
 
 .playerInput {
   /* background-color: #fffe; */
-  background-color: #fffb;
   border-radius: 20px;
   margin: 10px 4vw;
   padding: 10px;
@@ -134,8 +144,6 @@ div:focus {
 
 .playerOptionBox {
   /* background-color: #fffe; */
-  background-color: #fff0;
-  border: 1px solid #830;
   border-radius: 20px;
   margin: 10px 0vw 10px 4vw;
   padding: 10px;
@@ -148,8 +156,6 @@ div:focus {
 }
 
 #fox {
-  /* background-color: #f002; */
-  /* border-bottom: 1px dashed #f00; */
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -180,7 +186,6 @@ div:focus {
 .letter_eliminated {
   /* background-color: #0f02; */
   /* border: 1px solid #0002; */
-  color: #8303;
   font-size: 1.4vw;
   font-weight: 700;
   height: 100%;
@@ -190,7 +195,6 @@ div:focus {
 .letter_proven {
   /* background-color: #fffb; */
   /* background-image: radial-gradient(circle closest-side,#fffb 97%, #fff0 99%); */
-  background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
   /* border: 1px solid #0002; */
   /* color: #f00; */
   height: 100%;
