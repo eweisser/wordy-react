@@ -1,6 +1,6 @@
 .App {
-  background-color: #fc0;
-  color: #830;
+  background-color: #fc0;     /* done */
+  color: #830;                /* done */
 }
 
 .RightFrame:after {
@@ -29,5 +29,5 @@
 }
 
 #fox {
-  stroke: #830;
+  stroke: #830;                 /* done */
 }

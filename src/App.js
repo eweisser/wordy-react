@@ -10,13 +10,13 @@ import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
 import ScratchPadLetter from './components/scratch-pad-letter.js';
 import HowToPlay from './components/how-to-play.js';
+import OptionsPage from './components/options-page.js';
 
 // fix nose
 // implement fox reactions
 // AI actually tries to solve
 // save / load
 // minilex
-// change fox color
 // clear scratchpad
 // options menu
 // mark numbers for rounds
@@ -28,15 +28,19 @@ function App() {
   const [aiMenuAppear, setAiMenuAppear] = useState(false);
   const [gameAppear, setGameAppear] = useState(false);
   const [howToPlayAppear, setHowToPlayAppear] = useState(false);
+  const [optionsAppear, setOptionsAppear] = useState(false);
+  const [color1, setColor1] = useState("#fc0");
+  const [color2, setColor2] = useState("#830");
+  const [color3, setColor3] = useState("#fffb");
   // const [foxAppear, setFoxAppear] = useState(true);
   const [alphabetAppear, setAlphabetAppear] = useState(false);
 
   const [activeAi, setActiveAi] = useState(null);
 
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: color1, color: color2}}>
       <div className="LeftFrame">
-        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } />}
+        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
 
         {aiMenuAppear && <AIMenu>
           <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
@@ -47,13 +51,14 @@ function App() {
         {gameAppear && <Game sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
 
         {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
+        {optionsAppear && <OptionsPage returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setOptionsAppear(false)}} changeColorTheme={(colorPack) => {setColor1(colorPack[0]); setColor2(colorPack[1]); setColor3(colorPack[2])}} />}
 
       </div>
 
       <div className="RightFrame">
 
         {/* {foxAppear && <Fox />} */}
-        {<Fox />}
+        {<Fox Stroke={color2} />}
 
         {alphabetAppear && <ScratchPad>
           <ScratchPadLetter Letter="A"></ScratchPadLetter>

@@ -97,6 +97,84 @@
   width: 90%;
 }
 
+
+
+
+
+
+
+
+
+
+
+#color-sample-container {
+  display: flex;
+  margin-left: 30px;
+}
+
+.color-sample {
+  height: 50px;
+  width: 50px;
+  margin: 0 5px;
+  min-height: 50px;
+  min-width: 50px;
+}
+
+#white-sample {
+  background-image: radial-gradient(circle closest-side,#fed 80%, #fff0 85%);
+}
+
+#black-sample {
+  background-image: radial-gradient(circle closest-side,#444 80%, #fff0 85%);
+}
+
+#red-sample {
+  background-image: radial-gradient(circle closest-side,#b00 80%, #fff0 85%);
+}
+
+#gold-sample {
+  background-image: radial-gradient(circle closest-side,#fc0 80%, #fff0 85%);
+}
+
+#yg-sample {
+  background-image: radial-gradient(circle closest-side,#90d21f 80%, #fff0 85%);
+}
+
+#green-sample {
+  background-image: radial-gradient(circle closest-side,#035d30 80%, #fff0 85%);
+}
+
+#sky-sample {
+  background-image: radial-gradient(circle closest-side,#0df 80%, #fff0 85%);
+}
+
+#blue-sample {
+  background-image: radial-gradient(circle closest-side,#009 80%, #fff0 85%);
+}
+
+#purple-sample {
+  background-image: radial-gradient(circle closest-side,#74007a 80%, #fff0 85%);
+}
+
+#pink-sample {
+  background-image: radial-gradient(circle closest-side,#f8b 80%, #fff0 85%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #game {
   /* background-color: #0f04; */
   font-size: 12pt;
