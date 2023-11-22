@@ -3,10 +3,11 @@ import '../App.css';
 const LexiconChoiceContainer = ({children}) => {
 
     return (
+        <div>
+        <p>Lexicon</p>
         <div id="lexicon-choice-container">
-            Lexicon
-            <br/>
             {children}
+        </div>
         </div>
     );
 }

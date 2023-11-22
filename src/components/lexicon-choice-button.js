@@ -1,10 +1,10 @@
 import '../App.css';
 
-const ColorChangeButton = ({pressColorButton}) => {
+const LexiconChoiceContainer = ({Label, pressLexiconChoiceButton}) => {
 
     return (
-        <div className="playerOptionBox" onClick={() => pressColorButton()}></div>
+        <div className="playerOptionBox" onClick={() => pressLexiconChoiceButton()}>{Label}</div>
     );
 }
 
-export default ColorChangeButton;
+export default LexiconChoiceContainer;

@@ -31,40 +31,10 @@ function App() {
   const [gameAppear, setGameAppear] = useState(false);
   const [howToPlayAppear, setHowToPlayAppear] = useState(false);
   const [optionsAppear, setOptionsAppear] = useState(false);
-  const [colorThemeContainerAppear, setColorThemeContainerAppear] = useState(false);
-  // const [color1, setColor1] = useState("#fc0");
-  // const [color2, setColor2] = useState("#830");
-  // const [color3, setColor3] = useState("#fffb");
   const [alphabetAppear, setAlphabetAppear] = useState(false);
 
   const [activeAi, setActiveAi] = useState(null);
-
-  const changeColorsExperiment = (colorPack) => {
-
-    // document.querySelector(".App").style.backgroundColor = colorPack[0];
-    // document.querySelector(".App").style.color = colorPack[1];
-    // // document.querySelector(".RightFrame:after").style.background = colorPack[1];
-    // document.querySelector(".fox").style.stroke = colorPack[1];
-
-    // var compDialogueNodeList = document.querySelectorAll(".compDialogue");
-    // for (let i = 0; i < compDialogueNodeList.length; i++) {
-    //   compDialogueNodeList[i].style.backgroundColor = colorPack[2];
-    // }
-    // var compDialogueNodeList = document.querySelectorAll(".playerInput");
-    // for (let i = 0; i < compDialogueNodeList.length; i++) {
-    //   compDialogueNodeList[i].style.backgroundColor = colorPack[2];
-    // }
-
-    // var playerOptionBoxNodeList = document.querySelectorAll(".playerOptionBox");
-    // for (let i = 0; i < playerOptionBoxNodeList.length; i++) {
-    //   playerOptionBoxNodeList[i].style.borderColor = colorPack[1];
-    // }
-
-    // var letterEliminatedNodeList = document.querySelectorAll(".letter_eliminated");
-    // for (let i = 0; i < letterEliminatedNodeList.length; i++) {
-    //   letterEliminatedNodeList[i].style.color = colorPack[1];
-    // }
-  }
+  const [lexiconToUse, setLexiconToUse] = useState("minilex");
 
   return (
     <div id="ColorWrapper" className="GoldTheme">
@@ -84,21 +54,21 @@ function App() {
 
         {optionsAppear && <OptionsPage returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setOptionsAppear(false)}} >
             <ColorThemeContainer>
-              <ColorChangeButton Color="white-sample" pressColorButton={() => {changeColorsExperiment(["#fed","#830","#fff"])}}></ColorChangeButton>
-              <ColorChangeButton Color="black-sample" pressColorButton={() => {changeColorsExperiment(["#444","#fc0","#000"])}}></ColorChangeButton>
-              <ColorChangeButton Color="red-sample" pressColorButton={() => {changeColorsExperiment(["#b00","#fed","#0003"])}}></ColorChangeButton>
-              <ColorChangeButton Color="gold-sample" pressColorButton={() => {changeColorsExperiment(["#fc0","#830","#fffb"])}}></ColorChangeButton>
+              <ColorChangeButton Color="white-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "WhiteTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="black-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "BlackTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="red-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "RedTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="gold-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "GoldTheme"; }}></ColorChangeButton>
               <ColorChangeButton Color="yg-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "YGTheme"; }}></ColorChangeButton>
-              <ColorChangeButton Color="green-sample" pressColorButton={() => {changeColorsExperiment(["#035d30","#dfe","#000"])}}></ColorChangeButton>
-              <ColorChangeButton Color="sky-sample" pressColorButton={() => {changeColorsExperiment(["#0df","#059","#fffc"])}}></ColorChangeButton>
-              <ColorChangeButton Color="blue-sample" pressColorButton={() => {changeColorsExperiment(["#009","#def","#000"])}}></ColorChangeButton>
-              <ColorChangeButton Color="purple-sample" pressColorButton={() => {changeColorsExperiment(["#74007a","#ff80b9","#000"])}}></ColorChangeButton>
-              <ColorChangeButton Color="pink-sample" pressColorButton={() => {changeColorsExperiment(["#f8b","#704","#fffa"])}}></ColorChangeButton>
+              <ColorChangeButton Color="green-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "GreenTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="sky-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "SkyTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="blue-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "BlueTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="purple-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "PurpleTheme"; }}></ColorChangeButton>
+              <ColorChangeButton Color="pink-sample" pressColorButton={() => {document.getElementById("ColorWrapper").className = "PinkTheme"; }}></ColorChangeButton>
             </ColorThemeContainer>
 
             <LexiconChoiceContainer>
-              <LexiconChoiceButton Label="Maximal"></LexiconChoiceButton>
-              <LexiconChoiceButton Label="Standard"></LexiconChoiceButton>
+              <LexiconChoiceButton Label="Maximal" pressLexiconChoiceButton={() => {setLexiconToUse("maximal")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="Standard" pressLexiconChoiceButton={() => {setLexiconToUse("minilex")}}></LexiconChoiceButton>
             </LexiconChoiceContainer>
 
         </OptionsPage>}

@@ -160,6 +160,11 @@
   background-image: radial-gradient(circle closest-side,#f8b 80%, #fff0 85%);
 }
 
+#lexicon-choice-container {
+  display: flex;
+  margin-left: 30px;
+}
+
 
 
 
@@ -227,13 +232,7 @@ div:focus {
   padding: 10px;
 }
 
-.playerOptionBox:hover {
-  /* background-color: #fffe; */
-  background-color: #fffb;
-  border: 1px solid #fffb;
-}
-
-.fox {
+#fox {
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -308,6 +307,11 @@ div:focus {
   border: 1px solid #830;     /* done */
 }
 
+.GoldTheme .playerOptionBox:hover {
+  background-color: #fffb;
+  border-color: #fffb;
+}
+
 .GoldTheme .letter_eliminated {
   color: #8303;
 }
@@ -316,17 +320,134 @@ div:focus {
   background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
 }
 
-.GoldTheme .fox {
+.GoldTheme #fox {
   stroke: #830;                 /* done */
 }
 
+.WhiteTheme .App {
+  background-color: #fed;
+  color: #830;
+}
+
+.WhiteTheme .RightFrame:after {
+  background: #830;
+}
+
+.WhiteTheme .compDialogue {
+  background-color: #fff;
+}
+
+.WhiteTheme .playerInput {
+  background-color: #fff;
+}
+
+.WhiteTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #830;
+}
+
+.WhiteTheme .playerOptionBox:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.WhiteTheme .letter_eliminated {
+  color: #8302;
+}
+
+.WhiteTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#fff 74%, #fff0 76%);
+}
+
+.WhiteTheme #fox {
+  stroke: #830;
+}
+
+.BlackTheme .App {
+  background-color: #444;
+  color: #fc0;
+}
+
+.BlackTheme .RightFrame:after {
+  background: #fc0;
+}
+
+.BlackTheme .compDialogue {
+  background-color: #000;
+}
+
+.BlackTheme .playerInput {
+  background-color: #000;
+}
+
+.BlackTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #fc0;
+}
+
+.BlackTheme .playerOptionBox:hover {
+  background-color: #000;
+  border-color: #000;
+}
+
+.BlackTheme .letter_eliminated {
+  color: #fc03;
+}
+
+.BlackTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#000 74%, #444 76%);
+}
+
+.BlackTheme #fox {
+  stroke: #fc0;
+}
+
+.RedTheme .App {
+  background-color: #b00;
+  color: #fed;
+}
+
+.RedTheme .RightFrame:after {
+  background: #fed;
+}
+
+.RedTheme .compDialogue {
+  background-color: #0003;
+}
+
+.RedTheme .playerInput {
+  background-color: #0003;
+}
+
+.RedTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #fed;
+}
+
+.RedTheme .playerOptionBox:hover {
+  background-color: #0003;
+  border-color: #0003;
+}
+
+.RedTheme .letter_eliminated {
+  color: #fed4;
+}
+
+.RedTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#0005 74%, #fff0 76%);
+}
+
+.RedTheme #fox {
+  stroke: #fed;
+}
+
 .YGTheme .App {
-  background-color: #90d21f;     /* done */
-  color: #830;                /* done */
+  background-color: #90d21f;
+  color: #053;
 }
 
 .YGTheme .RightFrame:after {
-  background: #830;
+  background: #053;
 }
 
 .YGTheme .compDialogue {
@@ -339,17 +460,227 @@ div:focus {
 
 .YGTheme .playerOptionBox {
   background-color: #fff0;
-  border: 1px solid #830;     /* done */
+  border: 1px solid #053;
+}
+
+.YGTheme .playerOptionBox:hover {
+  background-color: #fffb;
+  border-color: #fffb;
 }
 
 .YGTheme .letter_eliminated {
-  color: #8303;
+  color: #0534;
 }
 
 .YGTheme .letter_proven {
   background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
 }
 
-.YGTheme .fox {
-  stroke: #830;                 /* done */
+.YGTheme #fox {
+  stroke: #053;
+}
+
+.GreenTheme .App {
+  background-color: #035d30;
+  color: #dfe;
+}
+
+.GreenTheme .RightFrame:after {
+  background: #dfe;
+}
+
+.GreenTheme .compDialogue {
+  background-color: #0004;
+  color: #dfe;
+}
+
+.GreenTheme .playerInput {
+  background-color: #0004;
+  color: #dfe;
+}
+
+.GreenTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #dfe;
+  color: #dfe;
+}
+
+.GreenTheme .playerOptionBox:hover {
+  background-color: #0004;
+  border-color: #0004;
+}
+
+.GreenTheme .letter_eliminated {
+  color: #dfe4;
+}
+
+.GreenTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#000 74%, #fff0 76%);
+}
+
+.GreenTheme #fox {
+  stroke: #dfe;
+}
+
+.SkyTheme .App {
+  background-color: #0df;
+  color: #059;
+}
+
+.SkyTheme .RightFrame:after {
+  background: #059;
+}
+
+.SkyTheme .compDialogue {
+  background-color: #fffc;
+}
+
+.SkyTheme .playerInput {
+  background-color: #fffc;
+}
+
+.SkyTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #059;
+}
+
+.SkyTheme .playerOptionBox:hover {
+  background-color: #fffc;
+  border-color: #fffc;
+}
+
+.SkyTheme .letter_eliminated {
+  color: #0593;
+}
+
+.SkyTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#fffc 74%, #fff0 76%);
+}
+
+.SkyTheme #fox {
+  stroke: #059;
+}
+
+.BlueTheme .App {
+  background-color: #009;
+  color: #def;
+}
+
+.BlueTheme .RightFrame:after {
+  background: #def;
+}
+
+.BlueTheme .compDialogue {
+  background-color: #0004;
+  color: #def;
+}
+
+.BlueTheme .playerInput {
+  background-color: #0004;
+  color: #def;
+}
+
+.BlueTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #def;
+  color: #def;
+}
+
+.BlueTheme .playerOptionBox:hover {
+  background-color: #0004;
+  border-color: #0004;
+}
+
+.BlueTheme .letter_eliminated {
+  color: #def;
+}
+
+.BlueTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#000 74%, #fff0 76%);
+}
+
+.BlueTheme #fox {
+  stroke: #def;
+}
+
+.PurpleTheme .App {
+  background-color: #74007a;
+  color: #fdf;
+}
+
+.PurpleTheme .RightFrame:after {
+  background: #ff80b9;
+}
+
+.PurpleTheme .compDialogue {
+  background-color: #fdf;
+  color: #707;
+}
+
+.PurpleTheme .playerInput {
+  background-color: #fdf;
+  color: #707;
+}
+
+.PurpleTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #ff80b9;
+}
+
+.PurpleTheme .playerOptionBox:hover {
+  background-color: #fdf;
+  border-color: #fdf;
+  color: #707;
+}
+
+.PurpleTheme .letter_eliminated {
+  color: #ff80b944;
+}
+
+.PurpleTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#ff80b9 74%, #707 76%);
+  color: #707;
+}
+
+.PurpleTheme #fox {
+  stroke: #fdf;
+}
+
+.PinkTheme .App {
+  background-color: #f8b;
+  color: #705;
+}
+
+.PinkTheme .RightFrame:after {
+  background: #705;
+}
+
+.PinkTheme .compDialogue {
+  background-color: #fff8;
+}
+
+.PinkTheme .playerInput {
+  background-color: #fff8;
+}
+
+.PinkTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #705;
+}
+
+.PinkTheme .playerOptionBox:hover {
+  background-color: #fff8;
+  border-color: #fff8;
+}
+
+.PinkTheme .letter_eliminated {
+  color: #7053;
+}
+
+.PinkTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#fffa 74%, #fff0 76%);
+}
+
+.PinkTheme #fox {
+  stroke: #705;
 }

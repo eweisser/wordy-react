@@ -1,5 +1,4 @@
 import '../App.css';
-import AIMenuButton from './AI-menu-button.js';
 
 const AIMenu = ({children}) => {
 

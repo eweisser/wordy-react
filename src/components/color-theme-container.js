@@ -3,10 +3,11 @@ import '../App.css';
 const ColorThemeContainer = ({children}) => {
 
     return (
+        <div>
+        <p>Color theme</p>
         <div id="color-sample-container">
-            Color theme
-            <br/>
             {children}
+        </div>
         </div>
     );
 }
