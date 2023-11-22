@@ -233,7 +233,7 @@ div:focus {
   border: 1px solid #fffb;
 }
 
-#fox {
+.fox {
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -284,4 +284,72 @@ div:focus {
 
 .scratchpad-text {
   transform: translate(0%, 40%);
+}
+
+.GoldTheme .App {
+  background-color: #fc0;     /* done */
+  color: #830;                /* done */
+}
+
+.GoldTheme .RightFrame:after {
+  background: #830;
+}
+
+.GoldTheme .compDialogue {
+  background-color: #fffb;
+}
+
+.GoldTheme .playerInput {
+  background-color: #fffb;
+}
+
+.GoldTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #830;     /* done */
+}
+
+.GoldTheme .letter_eliminated {
+  color: #8303;
+}
+
+.GoldTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
+}
+
+.GoldTheme .fox {
+  stroke: #830;                 /* done */
+}
+
+.YGTheme .App {
+  background-color: #90d21f;     /* done */
+  color: #830;                /* done */
+}
+
+.YGTheme .RightFrame:after {
+  background: #830;
+}
+
+.YGTheme .compDialogue {
+  background-color: #fffb;
+}
+
+.YGTheme .playerInput {
+  background-color: #fffb;
+}
+
+.YGTheme .playerOptionBox {
+  background-color: #fff0;
+  border: 1px solid #830;     /* done */
+}
+
+.YGTheme .letter_eliminated {
+  color: #8303;
+}
+
+.YGTheme .letter_proven {
+  background-image: radial-gradient(circle closest-side,#fffb 74%, #fff0 76%);
+}
+
+.YGTheme .fox {
+  stroke: #830;                 /* done */
 }
