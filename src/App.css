@@ -285,6 +285,29 @@ div:focus {
   transform: translate(0%, 40%);
 }
 
+.scratch-pad-reset-button {
+  /* border: 1px solid #00f1; */
+  font-size: 1.4vw;
+  grid-column: 2 / 6;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .GoldTheme .App {
   background-color: #fc0;     /* done */
   color: #830;                /* done */

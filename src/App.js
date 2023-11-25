@@ -9,6 +9,7 @@ import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
 import ScratchPadLetter from './components/scratch-pad-letter.js';
+import ScratchPadResetButton from './components/scratch-pad-reset-button.js';
 import HowToPlay from './components/how-to-play.js';
 import OptionsPage from './components/options-page.js';
 import ColorThemeContainer from './components/color-theme-container.js';
@@ -34,6 +35,7 @@ function App() {
   const [alphabetAppear, setAlphabetAppear] = useState(false);
 
   const [activeAi, setActiveAi] = useState(null);
+  const [resetStatus, setResetStatus] = useState("[reset]");
   const [lexiconToUse, setLexiconToUse] = useState("minilex");
 
   return (
@@ -111,6 +113,8 @@ function App() {
           <ScratchPadLetter Letter="Y"></ScratchPadLetter>
 
           <ScratchPadLetter Letter="Z"></ScratchPadLetter>
+          <ScratchPadLetter Letter="[reset]"></ScratchPadLetter>
+          {/* <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus == "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton> */}
         </ScratchPad>}
       </div>
     </div>
