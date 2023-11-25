@@ -1,43 +1,29 @@
 import '../App.css';
 import { useState } from 'react';
 
-const ScratchPadLetter = ({Letter}) => {
+const ScratchPadLetter = ({Letter, Resetter}) => {
 
     const [letterKnowledge, setLetterKnowledge] = useState("letter_neutral");
-    const [resetStatus, setResetStatus] = useState("[reset]");
 
     const cycleLetterButton = () => {
         if (letterKnowledge == "letter_neutral") {
             setLetterKnowledge("letter_eliminated");
         } else if (letterKnowledge == "letter_eliminated") {
             setLetterKnowledge("letter_proven");
+            // alert("Now proven!");
         } else if (letterKnowledge == "letter_proven") {
             setLetterKnowledge("letter_neutral");
+            // alert("Now neutral!");
         }
     }
 
-    const cycleResetButton = () => {
-        if (resetStatus == "[reset]") {
-            setResetStatus("click again to reset");
-        } else if (resetStatus == "click again to reset") {
-            var allLetters = document.querySelectorAll(".gbq");
-            for (const letterElement of allLetters) {
-                // console.log(letterElement.entries);
-                letterElement.className = "gbq letter_neutral";
-            }
-            setResetStatus("[reset]");
-        }
+    if (Resetter == "click again to reset") {
+        setLetterKnowledge("letter_neutral");
     }
 
-    if (Letter == "[reset]") {
     return (
-        <div className="scratch-pad-reset-button" onClick={() => cycleResetButton()}><div class="scratchpad-text">{resetStatus}</div></div>
+        <div className={letterKnowledge} onClick={() => cycleLetterButton()}><div class="scratchpad-text">{Letter}</div></div>
     );
-    } else {
-    return (
-        <div className={`gbq ${letterKnowledge}`} onClick={() => cycleLetterButton()}><div class="scratchpad-text">{Letter}</div></div>
-    ); 
-    }
 }
 
 export default ScratchPadLetter;

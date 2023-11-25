@@ -204,8 +204,16 @@ div:focus {
 .compDialogue {
   /* background-color: #0f03; */
   border-radius: 20px;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
   margin: 10px 4vw;
   padding: 10px;
+}
+
+.compDialogueRightCap {
+  /* border: 1px dashed #00f; */
+  font-style: oblique;
+  font-weight: 500;
 }
 
 .playerInputContainer {
@@ -309,8 +317,8 @@ div:focus {
 
 
 .GoldTheme .App {
-  background-color: #fc0;     /* done */
-  color: #830;                /* done */
+  background-color: #fc0; 
+  color: #830;     
 }
 
 .GoldTheme .RightFrame:after {
@@ -327,7 +335,7 @@ div:focus {
 
 .GoldTheme .playerOptionBox {
   background-color: #fff0;
-  border: 1px solid #830;     /* done */
+  border: 1px solid #830;
 }
 
 .GoldTheme .playerOptionBox:hover {
@@ -344,7 +352,7 @@ div:focus {
 }
 
 .GoldTheme #fox {
-  stroke: #830;                 /* done */
+  stroke: #830;
 }
 
 .WhiteTheme .App {

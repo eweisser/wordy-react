@@ -9,7 +9,7 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
-    const [allDialogues, setAllDialogues] = useState([ "!Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
+    const [allDialogues, setAllDialogues] = useState([ "!**Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
     const [gameStage, setGameStage] = useState("decide who goes first");
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
 
@@ -23,10 +23,10 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                 setAllDialogues(allDialogues.slice(0,1).concat(event.key) );     // if the user enters "1" or "2", make that the content of the most recent box
             } else if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1] === "1") {
-                    setAllDialogues(allDialogues.concat(["!Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
+                    setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1] === "2") {
-                    setAllDialogues(allDialogues.concat(["!Okay, I'll go first. Let's see...","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                    setAllDialogues(allDialogues.concat(["* *!Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()]+".","...") );
                     setGameStage("computerGuess");
                 }
             }
@@ -61,17 +61,17 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
-                        setAllDialogues(allDialogues.concat(["!That's right! You guessed my word!","!What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
+                        setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         if (userLetterCorrectNumber === 1) {
-                            setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letter.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*2*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
                         } else {
-                            setAllDialogues(allDialogues.concat(["!You got "+userLetterCorrectNumber+" letters.","!My guess is "+computerPicksGuessWord().toUpperCase()],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*3*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
                         }
                     }
                         setGameStage("computerGuess");
                 } else {
-                    setAllDialogues(allDialogues.concat(["!Sorry, that word isn't in my dictionary. Try a different word.","..."]) );
+                    setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.","..."]) );
                 }
             }
 
@@ -83,13 +83,13 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
             }
             if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1].charCodeAt(0) <= 53) {
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!Okay, what's your guess?","..."]) );
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?","..."]) );
                     setGameStage("userGuess");
                 }
             }
         } else if (gameStage === "game ended, before erasing") {
             if (event.key === "Enter") {
-                setAllDialogues(["!Enter 1 if you want to go first, or 2 for me to go first.","..."]);
+                setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.","..."]);
                 setGameStage("decide who goes first");
             }
         }
@@ -110,13 +110,13 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
     const computerPicksGuessWord = () => {
         return MINILEX[(Math.floor(Math.random()*MINILEX.length))];
     }
-    const computerMakesAGuess = () => {
-        setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
-    }
+    // const computerMakesAGuess = () => {
+    //     setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
+    // }
 
     const restartGame = () => {
         setGameStage("game ended, before erasing");
-        setAllDialogues(allDialogues.concat(["!Okay, press enter and I'll erase the previous game.","..."]) );
+        setAllDialogues(allDialogues.concat(["!**Okay, press enter and I'll erase the previous game.","..."]) );
     }
 
     const whoGoesFirstInput = useCallback((inputElement) => {
@@ -131,7 +131,11 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={itemNumber} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
-                        <div className="compDialogue">{item.slice(1)}</div>
+                        <div className="compDialogue">
+                            <div className="compDialogueLeftCap"></div>
+                            {item.split("*")[2]}
+                            <div className="compDialogueRightCap">{item.split("*")[1]}</div>
+                        </div>
                     </div>
         } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
             return <div tabIndex="0" key={itemNumber} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">

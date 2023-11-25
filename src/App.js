@@ -33,10 +33,23 @@ function App() {
   const [howToPlayAppear, setHowToPlayAppear] = useState(false);
   const [optionsAppear, setOptionsAppear] = useState(false);
   const [alphabetAppear, setAlphabetAppear] = useState(false);
+  const [letterKnowledge, setLetterKnowledge] = useState("letter_neutral");
 
   const [activeAi, setActiveAi] = useState(null);
   const [resetStatus, setResetStatus] = useState("[reset]");
   const [lexiconToUse, setLexiconToUse] = useState("minilex");
+
+  const cycleLetterButton = () => {
+    if (letterKnowledge == "letter_neutral") {
+        setLetterKnowledge("letter_eliminated");
+    } else if (letterKnowledge == "letter_eliminated") {
+        setLetterKnowledge("letter_proven");
+        // alert("Now proven!");
+    } else if (letterKnowledge == "letter_proven") {
+        setLetterKnowledge("letter_neutral");
+        // alert("Now neutral!");
+    }
+  }
 
   return (
     <div id="ColorWrapper" className="GoldTheme">
@@ -77,16 +90,17 @@ function App() {
 
       </div>
 
+
       <div className="RightFrame">
 
         {<Fox />}
 
         {alphabetAppear && <ScratchPad>
-          <ScratchPadLetter Letter="A"></ScratchPadLetter>
-          <ScratchPadLetter Letter="B"></ScratchPadLetter>
-          <ScratchPadLetter Letter="C"></ScratchPadLetter>
-          <ScratchPadLetter Letter="D"></ScratchPadLetter>
-          <ScratchPadLetter Letter="E"></ScratchPadLetter>
+          <ScratchPadLetter Resetter={resetStatus} Letter="A"></ScratchPadLetter>
+          <ScratchPadLetter Resetter={resetStatus} Letter="B"></ScratchPadLetter>
+          <ScratchPadLetter Resetter={resetStatus} Letter="C"></ScratchPadLetter>
+          <ScratchPadLetter Resetter={resetStatus} Letter="D"></ScratchPadLetter>
+          <ScratchPadLetter Resetter={resetStatus} Letter="E"></ScratchPadLetter>
 
           <ScratchPadLetter Letter="F"></ScratchPadLetter>
           <ScratchPadLetter Letter="G"></ScratchPadLetter>
@@ -113,8 +127,7 @@ function App() {
           <ScratchPadLetter Letter="Y"></ScratchPadLetter>
 
           <ScratchPadLetter Letter="Z"></ScratchPadLetter>
-          <ScratchPadLetter Letter="[reset]"></ScratchPadLetter>
-          {/* <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus == "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton> */}
+          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus == "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton>
         </ScratchPad>}
       </div>
     </div>
