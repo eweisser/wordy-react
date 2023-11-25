@@ -12,6 +12,7 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
     const [allDialogues, setAllDialogues] = useState([ "!**Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
     const [gameStage, setGameStage] = useState("decide who goes first");
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
+    const [computerRoundCount, setComputerRoundCount] = useState(1);
 
     if (computerSecretWord === ".....") {
         setComputerSecretWord(MINILEX[(Math.floor(Math.random()*MINILEX.length))]);
@@ -19,6 +20,7 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
 
     const handleKeyDown = (event) => {
         if (gameStage === "decide who goes first") {
+            setComputerRoundCount(1);
             if ("12".includes(event.key)) {
                 setAllDialogues(allDialogues.slice(0,1).concat(event.key) );     // if the user enters "1" or "2", make that the content of the most recent box
             } else if (event.key === "Enter") {
@@ -63,11 +65,13 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                         setGameStage("gameOverUserWon");
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
+                        const roundCountAtCreation = computerRoundCount;
                         if (userLetterCorrectNumber === 1) {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*2*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
                         } else {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*3*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
                         }
+                        setComputerRoundCount(computerRoundCount+1);
                     }
                         setGameStage("computerGuess");
                 } else {

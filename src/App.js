@@ -40,12 +40,12 @@ function App() {
   const [lexiconToUse, setLexiconToUse] = useState("minilex");
 
   const cycleLetterButton = () => {
-    if (letterKnowledge == "letter_neutral") {
+    if (letterKnowledge === "letter_neutral") {
         setLetterKnowledge("letter_eliminated");
-    } else if (letterKnowledge == "letter_eliminated") {
+    } else if (letterKnowledge === "letter_eliminated") {
         setLetterKnowledge("letter_proven");
         // alert("Now proven!");
-    } else if (letterKnowledge == "letter_proven") {
+    } else if (letterKnowledge === "letter_proven") {
         setLetterKnowledge("letter_neutral");
         // alert("Now neutral!");
     }
@@ -127,7 +127,7 @@ function App() {
           <ScratchPadLetter Letter="Y"></ScratchPadLetter>
 
           <ScratchPadLetter Letter="Z"></ScratchPadLetter>
-          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus == "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton>
+          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus === "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton>
         </ScratchPad>}
       </div>
     </div>
