@@ -224,8 +224,16 @@ div:focus {
 .playerInput {
   /* background-color: #fffe; */
   border-radius: 20px;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
   margin: 10px 4vw;
   padding: 10px;
+}
+
+.playerInputLeftCap {
+  /* border: 1px dashed #00f; */
+  font-style: oblique;
+  font-weight: 500;
 }
 
 .playerOptionBoxesContainer {

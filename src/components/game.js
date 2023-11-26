@@ -9,95 +9,145 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
-    const [allDialogues, setAllDialogues] = useState([ "!**Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.","..." ]);
+    const [allDialogues, setAllDialogues] = useState([ "!**Hi, I'm "+sendActiveAi+". Enter 1 if you want to go first, or 2 for me to go first.",["U"," ","..."]]);
     const [gameStage, setGameStage] = useState("decide who goes first");
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
     const [computerRoundCount, setComputerRoundCount] = useState(1);
+    const [userRoundCount, setUserRoundCount] = useState(1);
 
     if (computerSecretWord === ".....") {
         setComputerSecretWord(MINILEX[(Math.floor(Math.random()*MINILEX.length))]);
     }
 
+
+
+
+
+
+
+
+
     const handleKeyDown = (event) => {
+
+
+
+
+
+
+
+
         if (gameStage === "decide who goes first") {
             setComputerRoundCount(1);
+            setUserRoundCount(1);
             if ("12".includes(event.key)) {
-                setAllDialogues(allDialogues.slice(0,1).concat(event.key) );     // if the user enters "1" or "2", make that the content of the most recent box
+                const newDialogueBox = ["U"," ",event.key];
+                setAllDialogues(allDialogues.slice(0,1).concat([newDialogueBox]) );     // if the user enters "1" or "2", make that the content of the most recent box
             } else if (event.key === "Enter") {
-                if (allDialogues[allDialogues.length - 1] === "1") {
-                    setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.","..."]) );
+                if (allDialogues[allDialogues.length - 1][2] === "1") {
+                    setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
-                } else if (allDialogues[allDialogues.length - 1] === "2") {
-                    setAllDialogues(allDialogues.concat(["* *!Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()]+".","...") );
+                } else if (allDialogues[allDialogues.length - 1][2] === "2") {
+                    setAllDialogues(allDialogues.concat(["* *!Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()]+".",["U","","..."]) );
                     setGameStage("computerGuess");
                 }
             }
-        } else if (gameStage === "userGuess") {         // user's 5 letter guess
+            // setUserRoundCount(userRoundCount+1);
 
-            if (event.key.length === 1) {
-                let mostRecentBox = allDialogues.slice(allDialogues.length-1);
-                if (mostRecentBox[0] === "...") {
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key.toUpperCase()) );
+
+
+
+
+
+
+
+
+
+        } else if (gameStage === "userGuess") {         // user's 5 letter guess
+            if (event.key.length === 1) {               // if user presses A-Z key...
+                const indexOfMostRecentBox = allDialogues.length-1;
+                const mostRecentBox = allDialogues.slice(indexOfMostRecentBox)[0];
+                if (mostRecentBox[2] === "...") {
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,event.key.toUpperCase()]]) );
                 } else {
-                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)+event.key.toUpperCase();
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(buildingUserGuess) );
+                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)[0][2]+event.key.toUpperCase();
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,buildingUserGuess]]) );
                 }
             }
 
             if (event.key === "Backspace") {
                 let mostRecentBox = allDialogues.slice(allDialogues.length-1);
-                // alert(mostRecentBox);
-                // alert(mostRecentBox[0].length);
                 if (mostRecentBox[0] === "...") {
-                } else if (mostRecentBox[0].length === 1) {
+                } else if (mostRecentBox[0].length === 1) {         // if there's only one character left, replace it with "..."
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat("...") );
-                } else {
+                } else {                                            // if there's more than one character, delete the last one
                     var shorteningUserGuess = mostRecentBox[0].slice(0,mostRecentBox[0].length-1);
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(shorteningUserGuess) );
                 }
             }
 
             if (event.key === "Enter") {
-                var userGuessWord = allDialogues.slice(allDialogues.length-1)[0];
+                var userGuessWord = allDialogues.slice(allDialogues.length-1)[0][2];
                 if (MINILEX.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
-                        const roundCountAtCreation = computerRoundCount;
+                        let roundCountAtCreation = computerRoundCount;
                         if (userLetterCorrectNumber === 1) {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+"."],"...") );
+                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         }
                         setComputerRoundCount(computerRoundCount+1);
                     }
-                        setGameStage("computerGuess");
+                    setGameStage("computerGuess");
                 } else {
-                    setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.","..."]) );
+                    setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.",["U"," ","..."]]) );
                 }
             }
+
+
+
+
+
+
+
+
+
 
 
 
         } else if (gameStage === "computerGuess") {         // user's numerical 1-5 response to computer's guess
             if (event.key.charCodeAt(0) >= 49 && event.key.charCodeAt(0) <= 53) {
-                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(event.key) );
+                let newDialogueBox = ["U"," ",event.key];
+                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
             }
             if (event.key === "Enter") {
-                if (allDialogues[allDialogues.length - 1].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1].charCodeAt(0) <= 53) {
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?","..."]) );
+                let roundCountAtCreation = userRoundCount;
+                if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",roundCountAtCreation,"..."]]) );
                     setGameStage("userGuess");
+                    setUserRoundCount(userRoundCount+1);
                 }
             }
         } else if (gameStage === "game ended, before erasing") {
             if (event.key === "Enter") {
-                setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.","..."]);
+                setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.",["U","","..."]]);
                 setGameStage("decide who goes first");
             }
         }
       };    // end of handleKeyDown
+
+
+
+
+
+
+
+
+
+
 
     const computerEvaluatesUserGuess = (userGuessWord) => {
         var correctLetterRunningSum = 0;
@@ -106,17 +156,12 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                 correctLetterRunningSum = correctLetterRunningSum + 1;
             }
         }
-        // alert(userGuessWord);
-        // alert("Here, the computer will figure out how many letters the user has matched.");
         return correctLetterRunningSum;
     }
 
     const computerPicksGuessWord = () => {
         return MINILEX[(Math.floor(Math.random()*MINILEX.length))];
     }
-    // const computerMakesAGuess = () => {
-    //     setAllDialogues(allDialogues.concat(["!My guess is "+computerPicksGuessWord().toUpperCase(),"..."]) );
-    // }
 
     const restartGame = () => {
         setGameStage("game ended, before erasing");
@@ -130,8 +175,9 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
     }, []);
 
     const makeDialogueBox = (item) => {
-        console.log(item);
         const itemNumber = allDialogues.indexOf(item);
+        console.log("Item number "+itemNumber+" is...");
+        console.log(item);
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={itemNumber} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
@@ -150,11 +196,15 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                     </div>
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
             return <div key={itemNumber} className="playerInputContainer">
-                        <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>{item}</div>
+                        <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>
+                            <div className="playerInputLeftCap">{item[1]}</div>
+                            {item[2]}
+                            <div className="playerInputRightCap"></div>
+                        </div>
                         <div className="playerInputSpace"></div>
                     </div>
-        }
-    }
+        }       // end of handling case--player input box
+    }           // end of makeDialogueBox
 
     var mappedDialogueBoxes = allDialogues.map(makeDialogueBox);
 
