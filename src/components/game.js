@@ -33,9 +33,6 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
 
 
 
-
-
-
         if (gameStage === "decide who goes first") {
             setComputerRoundCount(1);
             setUserRoundCount(1);
@@ -47,8 +44,9 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                     setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1][2] === "2") {
-                    setAllDialogues(allDialogues.concat(["* *!Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()]+".",["U","","..."]) );
+                    setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                     setGameStage("computerGuess");
+                    setComputerRoundCount(2);
                 }
             }
 
@@ -128,7 +126,6 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                 if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
                     setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
-                    // setUserRoundCount(userRoundCount+1);
                 }
             }
 
