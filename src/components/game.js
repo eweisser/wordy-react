@@ -51,7 +51,6 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                     setGameStage("computerGuess");
                 }
             }
-            // setUserRoundCount(userRoundCount+1);
 
 
 
@@ -75,13 +74,14 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
             }
 
             if (event.key === "Backspace") {
-                let mostRecentBox = allDialogues.slice(allDialogues.length-1);
-                if (mostRecentBox[0] === "...") {
-                } else if (mostRecentBox[0].length === 1) {         // if there's only one character left, replace it with "..."
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat("...") );
+                let mostRecentBoxText = allDialogues.slice(allDialogues.length-1)[0][2];
+                let allPreviousBoxes = allDialogues.slice(0,allDialogues.length-1);
+                if (mostRecentBoxText === "...") {
+                } else if (mostRecentBoxText.length === 1) {         // if there's only one character left, replace it with "..."
+                    setAllDialogues(allPreviousBoxes.concat([["U",userRoundCount,"..."]]));
                 } else {                                            // if there's more than one character, delete the last one
-                    var shorteningUserGuess = mostRecentBox[0].slice(0,mostRecentBox[0].length-1);
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat(shorteningUserGuess) );
+                    var shorteningUserGuess = mostRecentBoxText.slice(0,mostRecentBoxText.length-1);
+                    setAllDialogues(allPreviousBoxes.concat([["U",userRoundCount,shorteningUserGuess]]));
                 }
             }
 
@@ -102,6 +102,7 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                         setComputerRoundCount(computerRoundCount+1);
                     }
                     setGameStage("computerGuess");
+                    setUserRoundCount(userRoundCount+1);
                 } else {
                     setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.",["U"," ","..."]]) );
                 }
@@ -124,13 +125,17 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
                 setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
             }
             if (event.key === "Enter") {
-                let roundCountAtCreation = userRoundCount;
                 if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",roundCountAtCreation,"..."]]) );
+                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
-                    setUserRoundCount(userRoundCount+1);
+                    // setUserRoundCount(userRoundCount+1);
                 }
             }
+
+
+
+
+
         } else if (gameStage === "game ended, before erasing") {
             if (event.key === "Enter") {
                 setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.",["U","","..."]]);
