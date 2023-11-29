@@ -20,10 +20,11 @@ import LexiconChoiceButton from './components/lexicon-choice-button.js';
 // implement fox reactions
 // AI actually tries to solve
 // save / load
-// minilex
+// minilex edits
 // clear scratchpad
-// mark numbers for rounds
 // auto-refocus
+// mobile optimization
+// lexicon choice--other langs, other word lengths?
 
 function App() {
 
@@ -38,18 +39,57 @@ function App() {
   const [activeAi, setActiveAi] = useState(null);
   const [resetStatus, setResetStatus] = useState("[reset]");
   const [lexiconToUse, setLexiconToUse] = useState("minilex");
+  const [alphabetStatus, setAlphabetStatus] = useState({A: "letter_neutral", B: "letter_neutral", C: "letter_neutral", D: "letter_neutral", E: "letter_neutral", F: "letter_neutral", G: "letter_neutral", H: "letter_neutral", I: "letter_neutral", J: "letter_neutral", K: "letter_neutral", L: "letter_neutral", M: "letter_neutral", N: "letter_neutral", O: "letter_neutral", P: "letter_neutral", Q: "letter_neutral", R: "letter_neutral", S: "letter_neutral", T: "letter_neutral", U: "letter_neutral", V: "letter_neutral", W: "letter_neutral", X: "letter_neutral", Y: "letter_neutral", Z: "letter_neutral"});
 
-  const cycleLetterButton = () => {
-    if (letterKnowledge === "letter_neutral") {
-        setLetterKnowledge("letter_eliminated");
-    } else if (letterKnowledge === "letter_eliminated") {
-        setLetterKnowledge("letter_proven");
-        // alert("Now proven!");
-    } else if (letterKnowledge === "letter_proven") {
-        setLetterKnowledge("letter_neutral");
-        // alert("Now neutral!");
-    }
+  // const fullAlphabetArray = [];
+  // for (let i = 65; i < 91; i++) {
+  //   fullAlphabetArray.push([String.fromCharCode(i),"letter_neutral"]);
+  // }
+
+  const fullAlphabetObject = {};
+  for (let i = 65; i < 91; i++) {
+    fullAlphabetObject[String.fromCharCode(i)] = "letter_neutral";
   }
+
+  const cycleLetterButtonParent = (l, lk) => {
+    const replacement = {};
+    var newStatus;
+    if (lk === "letter_neutral") {
+      newStatus = "letter_eliminated";
+    } else if (lk === "letter_eliminated") {
+      newStatus = "letter_proven";
+    } else if (lk === "letter_proven") {
+      newStatus = "letter_neutral";
+    }
+    replacement[l] = newStatus;
+    setAlphabetStatus({...alphabetStatus, ...replacement});
+  }
+
+  const makeScratchpadObject = (qqq) => {
+    var scratchpadArrayFromObject = [];
+    for (var key in qqq) {
+      scratchpadArrayFromObject.push(<ScratchPadLetter Letter={key} LetterKnowledge={qqq[key]} cycleLetterButton={(l, lk) => {cycleLetterButtonParent(l, lk)}} ></ScratchPadLetter>);
+    }
+    return scratchpadArrayFromObject;
+  }
+
+  var mappedScratchpadLettersObject = makeScratchpadObject(alphabetStatus);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div id="ColorWrapper" className="GoldTheme">
@@ -96,8 +136,10 @@ function App() {
         {<Fox />}
 
         {alphabetAppear && <ScratchPad>
-          <ScratchPadLetter Resetter={resetStatus} Letter="A"></ScratchPadLetter>
-          <ScratchPadLetter Resetter={resetStatus} Letter="B"></ScratchPadLetter>
+          {/* {mappedScratchpadLettersArray} */}
+          {mappedScratchpadLettersObject}
+          {/* <ScratchPadLetter Letter="A" LetterKnowledge={alphabetStatus["A"]} cycleLetterButton={(l, lk) => {cycleLetterButtonParent(l, lk)}} ></ScratchPadLetter> */}
+          {/* <ScratchPadLetter Resetter={resetStatus} Letter="B"></ScratchPadLetter>
           <ScratchPadLetter Resetter={resetStatus} Letter="C"></ScratchPadLetter>
           <ScratchPadLetter Resetter={resetStatus} Letter="D"></ScratchPadLetter>
           <ScratchPadLetter Resetter={resetStatus} Letter="E"></ScratchPadLetter>
@@ -126,7 +168,7 @@ function App() {
           <ScratchPadLetter Letter="X"></ScratchPadLetter>
           <ScratchPadLetter Letter="Y"></ScratchPadLetter>
 
-          <ScratchPadLetter Letter="Z"></ScratchPadLetter>
+          <ScratchPadLetter Letter="Z"></ScratchPadLetter> */}
           <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus === "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton>
         </ScratchPad>}
       </div>
