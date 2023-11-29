@@ -5,7 +5,6 @@ import Game from './components/game.js';
 import Fox from './components/fox.js';
 import ScratchPad from './components/scratchpad.js';
 import './App.css';
-// import './bkgd_gold.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
 import ScratchPadLetter from './components/scratch-pad-letter.js';
@@ -21,7 +20,6 @@ import LexiconChoiceButton from './components/lexicon-choice-button.js';
 // AI actually tries to solve
 // save / load
 // minilex edits
-// clear scratchpad
 // auto-refocus
 // mobile optimization
 // lexicon choice--other langs, other word lengths?
@@ -74,6 +72,15 @@ function App() {
   }
 
   var mappedScratchpadLettersObject = makeScratchpadObject(alphabetStatus);
+
+  const handleReset = () => {
+    if (resetStatus === "[reset]") {
+      setResetStatus("click again to reset");
+    } else if (resetStatus === "click again to reset") {
+      setAlphabetStatus(fullAlphabetObject);
+      setResetStatus("[reset]");
+    }
+  }
 
 
 
@@ -144,32 +151,8 @@ function App() {
           <ScratchPadLetter Resetter={resetStatus} Letter="D"></ScratchPadLetter>
           <ScratchPadLetter Resetter={resetStatus} Letter="E"></ScratchPadLetter>
 
-          <ScratchPadLetter Letter="F"></ScratchPadLetter>
-          <ScratchPadLetter Letter="G"></ScratchPadLetter>
-          <ScratchPadLetter Letter="H"></ScratchPadLetter>
-          <ScratchPadLetter Letter="I"></ScratchPadLetter>
-          <ScratchPadLetter Letter="J"></ScratchPadLetter>
-          
-          <ScratchPadLetter Letter="K"></ScratchPadLetter>
-          <ScratchPadLetter Letter="L"></ScratchPadLetter>
-          <ScratchPadLetter Letter="M"></ScratchPadLetter>
-          <ScratchPadLetter Letter="N"></ScratchPadLetter>
-          <ScratchPadLetter Letter="O"></ScratchPadLetter>
-          
-          <ScratchPadLetter Letter="P"></ScratchPadLetter>
-          <ScratchPadLetter Letter="Q"></ScratchPadLetter>
-          <ScratchPadLetter Letter="R"></ScratchPadLetter>
-          <ScratchPadLetter Letter="S"></ScratchPadLetter>
-          <ScratchPadLetter Letter="T"></ScratchPadLetter>
-
-          <ScratchPadLetter Letter="U"></ScratchPadLetter>
-          <ScratchPadLetter Letter="V"></ScratchPadLetter>
-          <ScratchPadLetter Letter="W"></ScratchPadLetter>
-          <ScratchPadLetter Letter="X"></ScratchPadLetter>
-          <ScratchPadLetter Letter="Y"></ScratchPadLetter>
-
           <ScratchPadLetter Letter="Z"></ScratchPadLetter> */}
-          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {resetStatus === "[reset]" ? setResetStatus("click again to reset") : setResetStatus("[reset]")}}> </ScratchPadResetButton>
+          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
         </ScratchPad>}
       </div>
     </div>
