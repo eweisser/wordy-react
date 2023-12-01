@@ -16,13 +16,13 @@ import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
-// implement fox reactions
 // AI actually tries to solve
 // save / load
 // minilex edits
 // auto-refocus
 // mobile optimization
 // lexicon choice--other langs, other word lengths?
+// more detailed fox reactions
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
 
   const [activeAi, setActiveAi] = useState(null);
   const [resetStatus, setResetStatus] = useState("[reset]");
-  const [lexiconToUse, setLexiconToUse] = useState("minilex");
+  const [lexiconToUse, setLexiconToUse] = useState("standard");
   const [alphabetStatus, setAlphabetStatus] = useState({A: "letter_neutral", B: "letter_neutral", C: "letter_neutral", D: "letter_neutral", E: "letter_neutral", F: "letter_neutral", G: "letter_neutral", H: "letter_neutral", I: "letter_neutral", J: "letter_neutral", K: "letter_neutral", L: "letter_neutral", M: "letter_neutral", N: "letter_neutral", O: "letter_neutral", P: "letter_neutral", Q: "letter_neutral", R: "letter_neutral", S: "letter_neutral", T: "letter_neutral", U: "letter_neutral", V: "letter_neutral", W: "letter_neutral", X: "letter_neutral", Y: "letter_neutral", Z: "letter_neutral"});
 
   const [foxMood, setFoxMood] = useState("neutral");
@@ -111,7 +111,7 @@ function App() {
           <AIMenuButton AiName="Clair" pickAi={() => {setActiveAi("Clair"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
-        {gameAppear && <Game sendMoodFromGameToApp={handleFoxMoodCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
+        {gameAppear && <Game lexiconToUse={lexiconToUse} sendMoodFromGameToApp={handleFoxMoodCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
 
         {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
 
@@ -131,7 +131,9 @@ function App() {
 
             <LexiconChoiceContainer>
               <LexiconChoiceButton Label="Maximal" pressLexiconChoiceButton={() => {setLexiconToUse("maximal")}}></LexiconChoiceButton>
-              <LexiconChoiceButton Label="Standard" pressLexiconChoiceButton={() => {setLexiconToUse("minilex")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="Standard" pressLexiconChoiceButton={() => {setLexiconToUse("standard")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="German" pressLexiconChoiceButton={() => {setLexiconToUse("german")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="Spanish" pressLexiconChoiceButton={() => {setLexiconToUse("spanish")}}></LexiconChoiceButton>
             </LexiconChoiceContainer>
 
         </OptionsPage>}

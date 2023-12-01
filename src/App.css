@@ -521,27 +521,27 @@ div:focus {
 
 .GreenTheme .App {
   background-color: #035d30;
-  color: #dfe;
+  color: #ffc;
 }
 
 .GreenTheme .RightFrame:after {
-  background: #dfe;
+  background: #ffc;
 }
 
 .GreenTheme .compDialogue {
   background-color: #0004;
-  color: #dfe;
+  color: #ffc;
 }
 
 .GreenTheme .playerInput {
   background-color: #0004;
-  color: #dfe;
+  color: #ffc;
 }
 
 .GreenTheme .playerOptionBox {
   background-color: #fff0;
-  border: 1px solid #dfe;
-  color: #dfe;
+  border: 1px solid #ffc;
+  color: #ffc;
 }
 
 .GreenTheme .playerOptionBox:hover {
@@ -550,7 +550,7 @@ div:focus {
 }
 
 .GreenTheme .letter_eliminated {
-  color: #dfe4;
+  color: #ffc4;
 }
 
 .GreenTheme .letter_proven {
@@ -558,7 +558,7 @@ div:focus {
 }
 
 .GreenTheme #fox {
-  stroke: #dfe;
+  stroke: #ffc;
 }
 
 .SkyTheme .App {

@@ -1,11 +1,9 @@
 import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
-// import { useEffect } from 'react';
-// import { LEXICON } from './lexicon.js';
-import { MINILEX } from './minilex.js';
+import { ENG_STANDARD, ENG_MAX, GERMAN01, SPANISH01 } from './minilex.js';
 
-const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp}) => {
+const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
@@ -14,9 +12,26 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp}) => {
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
     const [computerRoundCount, setComputerRoundCount] = useState(1);
     const [userRoundCount, setUserRoundCount] = useState(1);
+    var activeLexicon = ENG_STANDARD;
 
     if (computerSecretWord === ".....") {
-        setComputerSecretWord(MINILEX[(Math.floor(Math.random()*MINILEX.length))]);
+        setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
+    }
+    switch(lexiconToUse) {
+        case "standard":
+            activeLexicon = ENG_STANDARD;
+            break;
+        case "maximal":
+            activeLexicon = ENG_MAX;
+            break;
+        case "german":
+            activeLexicon = GERMAN01;
+            break;
+        case "spanish":
+            activeLexicon = SPANISH01;
+            break;
+        default:
+            break;
     }
 
 
@@ -85,7 +100,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp}) => {
 
             if (event.key === "Enter") {
                 var userGuessWord = allDialogues.slice(allDialogues.length-1)[0][2];
-                if (MINILEX.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {
+                if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
@@ -186,7 +201,8 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp}) => {
     }
 
     const computerPicksGuessWord = () => {
-        return MINILEX[(Math.floor(Math.random()*MINILEX.length))];
+        // alert(activeLexicon);
+        return activeLexicon[(Math.floor(Math.random()*activeLexicon.length))];
     }
 
     const restartGame = () => {
