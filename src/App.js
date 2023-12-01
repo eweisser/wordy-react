@@ -79,8 +79,8 @@ function App() {
     }
   }
 
-  const handleCallback = (childData) => {
-    setFoxMood(childData);
+  const handleFoxMoodCallback = (moodData) => {
+    setFoxMood(moodData);
   }
 
 
@@ -111,7 +111,7 @@ function App() {
           <AIMenuButton AiName="Clair" pickAi={() => {setActiveAi("Clair"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
-        {gameAppear && <Game parentCallback={handleCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
+        {gameAppear && <Game sendMoodFromGameToApp={handleFoxMoodCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
 
         {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
 

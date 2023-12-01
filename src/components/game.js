@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 // import { LEXICON } from './lexicon.js';
 import { MINILEX } from './minilex.js';
 
-const Game = ({sendActiveAi, newGamePickAi, parentCallback}) => {
+const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
@@ -118,15 +118,35 @@ const Game = ({sendActiveAi, newGamePickAi, parentCallback}) => {
 
 
         } else if (gameStage === "computerGuess") {         // user's numerical 1-5 response to computer's guess
-            if (event.key.charCodeAt(0) >= 49 && event.key.charCodeAt(0) <= 53) {
+            if (event.key.charCodeAt(0) >= 48 && event.key.charCodeAt(0) <= 53) {
                 let newDialogueBox = ["U"," ",event.key];
                 setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
             }
             if (event.key === "Enter") {
-                if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
+                if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 48 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
                     const userFeedback = allDialogues[allDialogues.length - 1][2];
-                    if (userFeedback === "5") {
-                        parentCallback("shocked");
+                    switch(userFeedback) {                      // change fox's eyes/expression based on response
+                        case "5":
+                            sendMoodFromGameToApp("shocked");
+                            break;
+                        case "4":
+                            sendMoodFromGameToApp("neutral");
+                            break;
+                        case "3":
+                            sendMoodFromGameToApp("suspicious");
+                            break;
+                        case "2":
+                            sendMoodFromGameToApp("crying");
+                            break;
+                        case "1":
+                            sendMoodFromGameToApp("dead");
+                            break;
+                        case "0":
+                            sendMoodFromGameToApp("shocked");
+                            break;
+                        default:
+                            sendMoodFromGameToApp("neutral");
+                            break;
                     }
                     setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");

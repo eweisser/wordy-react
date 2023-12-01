@@ -2,7 +2,7 @@
 
 const Fox = ({Mood}) => {
 
-    // alert(Mood);
+    // alert(Mood) ಠ ಠ;
 
     const ActiveEyes = ({Eyeset}) => {
         var eyesSVG = "";
@@ -25,7 +25,6 @@ const Fox = ({Mood}) => {
                 {/* <path d="M 490 440 l 80 0 M 560 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" name="right eye squinting right"/> */}
             </g>
         }
-        // alert({Mood});
         return (
             eyesSVG
         )
