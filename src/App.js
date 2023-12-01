@@ -39,17 +39,14 @@ function App() {
   const [lexiconToUse, setLexiconToUse] = useState("minilex");
   const [alphabetStatus, setAlphabetStatus] = useState({A: "letter_neutral", B: "letter_neutral", C: "letter_neutral", D: "letter_neutral", E: "letter_neutral", F: "letter_neutral", G: "letter_neutral", H: "letter_neutral", I: "letter_neutral", J: "letter_neutral", K: "letter_neutral", L: "letter_neutral", M: "letter_neutral", N: "letter_neutral", O: "letter_neutral", P: "letter_neutral", Q: "letter_neutral", R: "letter_neutral", S: "letter_neutral", T: "letter_neutral", U: "letter_neutral", V: "letter_neutral", W: "letter_neutral", X: "letter_neutral", Y: "letter_neutral", Z: "letter_neutral"});
 
-  // const fullAlphabetArray = [];
-  // for (let i = 65; i < 91; i++) {
-  //   fullAlphabetArray.push([String.fromCharCode(i),"letter_neutral"]);
-  // }
+  const [foxMood, setFoxMood] = useState("neutral");
 
   const fullAlphabetObject = {};
   for (let i = 65; i < 91; i++) {
     fullAlphabetObject[String.fromCharCode(i)] = "letter_neutral";
   }
 
-  const cycleLetterButtonParent = (l, lk) => {
+  const cycleLetterButtonParent = (letter, lk) => {
     const replacement = {};
     var newStatus;
     if (lk === "letter_neutral") {
@@ -59,7 +56,7 @@ function App() {
     } else if (lk === "letter_proven") {
       newStatus = "letter_neutral";
     }
-    replacement[l] = newStatus;
+    replacement[letter] = newStatus;
     setAlphabetStatus({...alphabetStatus, ...replacement});
   }
 
@@ -80,6 +77,10 @@ function App() {
       setAlphabetStatus(fullAlphabetObject);
       setResetStatus("[reset]");
     }
+  }
+
+  const handleCallback = (childData) => {
+    setFoxMood(childData);
   }
 
 
@@ -110,7 +111,7 @@ function App() {
           <AIMenuButton AiName="Clair" pickAi={() => {setActiveAi("Clair"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
-        {gameAppear && <Game sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
+        {gameAppear && <Game parentCallback={handleCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
 
         {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
 
@@ -140,18 +141,10 @@ function App() {
 
       <div className="RightFrame">
 
-        {<Fox />}
+        {<Fox Mood={foxMood} />}
 
         {alphabetAppear && <ScratchPad>
-          {/* {mappedScratchpadLettersArray} */}
           {mappedScratchpadLettersObject}
-          {/* <ScratchPadLetter Letter="A" LetterKnowledge={alphabetStatus["A"]} cycleLetterButton={(l, lk) => {cycleLetterButtonParent(l, lk)}} ></ScratchPadLetter> */}
-          {/* <ScratchPadLetter Resetter={resetStatus} Letter="B"></ScratchPadLetter>
-          <ScratchPadLetter Resetter={resetStatus} Letter="C"></ScratchPadLetter>
-          <ScratchPadLetter Resetter={resetStatus} Letter="D"></ScratchPadLetter>
-          <ScratchPadLetter Resetter={resetStatus} Letter="E"></ScratchPadLetter>
-
-          <ScratchPadLetter Letter="Z"></ScratchPadLetter> */}
           <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
         </ScratchPad>}
       </div>

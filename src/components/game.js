@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 // import { LEXICON } from './lexicon.js';
 import { MINILEX } from './minilex.js';
 
-const Game = ({sendActiveAi, newGamePickAi}) => {
+const Game = ({sendActiveAi, newGamePickAi, parentCallback}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
@@ -124,6 +124,10 @@ const Game = ({sendActiveAi, newGamePickAi}) => {
             }
             if (event.key === "Enter") {
                 if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 49 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
+                    const userFeedback = allDialogues[allDialogues.length - 1][2];
+                    if (userFeedback === "5") {
+                        parentCallback("shocked");
+                    }
                     setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
                 }
