@@ -9,7 +9,10 @@ const OptionsPage = ({children, returnToStartMenu}) => {
             {children}
         </div>
 
-        <div className="playerOptionBox" onClick={() => returnToStartMenu()}>Go to start menu</div>
+        <div className="playerOptionBoxesContainer">
+        <div id="go-to-start-menu-button" className="playerOptionBox" onClick={() => returnToStartMenu()}>Go to start menu</div>
+        </div>
+
         </div>
     );
 }

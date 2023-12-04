@@ -19,8 +19,10 @@ const Fox = ({Mood}) => {
             eyesSVG = <g><path d="M 250 420 l 80 0 m -40 20 l 0 100" stroke-width="15" stroke-linecap="round" fill="none" name="left eye crying-T"/>
                 <path d="M 470 420 l 80 0 m -40 20 l 0 100" stroke-width="15" stroke-linecap="round" fill="none" name="right eye crying-T"/></g>
         } else if (Eyeset === "suspicious") {
-            eyesSVG = <g><path d="M 230 440 l 80 0 M 240 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" name="left eye squinting left"/>
-                <path d="M 450 440 l 80 0 M 460 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" name="right eye squinting left"/>
+            eyesSVG = <g><path d="M 230 440 l 80 0" stroke-width="15" stroke-linecap="round" fill="none" id="left-eye-squint"/>
+                <path d="M 240 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" id="left-pupil-squint"/>
+                <path d="M 450 440 l 80 0" stroke-width="15" stroke-linecap="round" fill="none" id="right-eye-squint"/>
+                <path d="M 460 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" id="right-pupil-squint"/>
                 {/* <path d="M 270 440 l 80 0 M 340 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" name="left eye squinting right"/> */}
                 {/* <path d="M 490 440 l 80 0 M 560 440 l 0 20" stroke-width="15" stroke-linecap="round" fill="none" name="right eye squinting right"/> */}
             </g>

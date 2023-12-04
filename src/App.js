@@ -18,11 +18,10 @@ import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
 // AI actually tries to solve
 // save / load
-// minilex edits
+// minilex edits: consult another corpus
 // auto-refocus
 // mobile optimization
-// lexicon choice--other langs, other word lengths?
-// more detailed fox reactions
+// more detailed fox reactions--animations?
 
 function App() {
 
@@ -81,7 +80,12 @@ function App() {
 
   const handleFoxMoodCallback = (moodData) => {
     setFoxMood(moodData);
+    setInterval(resetFace, 2000);
   }
+
+  const resetFace = () => {
+    setFoxMood("neutral");
+}
 
 
 

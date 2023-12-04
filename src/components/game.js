@@ -34,6 +34,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
             break;
     }
 
+    // const resetFace = () => {
+    //     sendMoodFromGameToApp("neutral");
+    // }
+
 
 
 
@@ -143,21 +147,26 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     switch(userFeedback) {                      // change fox's eyes/expression based on response
                         case "5":
                             sendMoodFromGameToApp("shocked");
+                            // setInterval(resetFace, 2000);
                             break;
                         case "4":
                             sendMoodFromGameToApp("neutral");
                             break;
                         case "3":
                             sendMoodFromGameToApp("suspicious");
+                            // setInterval(resetFace, 2000);
                             break;
                         case "2":
                             sendMoodFromGameToApp("crying");
+                            // setInterval(resetFace, 2000);
                             break;
                         case "1":
                             sendMoodFromGameToApp("dead");
+                            // setInterval(resetFace, 2000);
                             break;
                         case "0":
                             sendMoodFromGameToApp("shocked");
+                            // setInterval(resetFace, 2000);
                             break;
                         default:
                             sendMoodFromGameToApp("neutral");
