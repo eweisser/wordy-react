@@ -2,6 +2,7 @@ import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { ENG_STANDARD, ENG_MAX, GERMAN01, SPANISH01 } from './minilex.js';
+import { AI_BEN } from './ai-ben.js';
 
 const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
 
@@ -12,7 +13,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
     const [computerRoundCount, setComputerRoundCount] = useState(1);
     const [userRoundCount, setUserRoundCount] = useState(1);
+    const [computerGuessRecord, setComputerGuessRecord] = useState({});
     var activeLexicon = ENG_STANDARD;
+    var latestComputerWordChoice = "";
+    const [latestComputerGuessWord, setLatestComputerGuessWord] = useState(".....");
 
     if (computerSecretWord === ".....") {
         setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
@@ -63,7 +67,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1][2] === "2") {
-                    setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
+                    console.log(computerGuessRecord);
+                    latestComputerWordChoice = computerPicksGuessWord();
+                    setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+latestComputerWordChoice.toUpperCase()+".",["U","","..."]]) );
                     setGameStage("computerGuess");
                     setComputerRoundCount(2);
                 }
@@ -111,6 +117,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         let roundCountAtCreation = computerRoundCount;
+                        console.log(computerGuessRecord);
                         if (userLetterCorrectNumber === 1) {
                             setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
@@ -142,8 +149,12 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                 setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
             }
             if (event.key === "Enter") {
+                const userFeedback = allDialogues[allDialogues.length - 1][2];
                 if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 48 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
-                    const userFeedback = allDialogues[allDialogues.length - 1][2];
+                    // setComputerGuessRecord(computerGuessRecord.concat([[latestComputerGuessWord,userFeedback]]));
+                    const dummyObject = computerGuessRecord;
+                    dummyObject[latestComputerGuessWord] = parseInt(userFeedback);
+                    setComputerGuessRecord(dummyObject);
                     switch(userFeedback) {                      // change fox's eyes/expression based on response
                         case "5":
                             sendMoodFromGameToApp("shocked");
@@ -211,7 +222,11 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
     const computerPicksGuessWord = () => {
         // alert(activeLexicon);
-        return activeLexicon[(Math.floor(Math.random()*activeLexicon.length))];
+        // alert(AI_BEN(activeLexicon));
+        // var computerWordChoice = activeLexicon[(Math.floor(Math.random()*activeLexicon.length))];
+        var computerWordChoice = AI_BEN(activeLexicon);
+        setLatestComputerGuessWord(computerWordChoice);
+        return computerWordChoice;
     }
 
     const restartGame = () => {
@@ -227,8 +242,8 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
     const makeDialogueBox = (item) => {
         const itemNumber = allDialogues.indexOf(item);
-        console.log("Item number "+itemNumber+" is...");
-        console.log(item);
+        // console.log("Item number "+itemNumber+" is...");
+        // console.log(item);
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={itemNumber} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
