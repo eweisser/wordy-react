@@ -59,10 +59,10 @@ function App() {
     setAlphabetStatus({...alphabetStatus, ...replacement});
   }
 
-  const makeScratchpadObject = (qqq) => {
+  const makeScratchpadObject = (alphabetStatusParameter) => {
     var scratchpadArrayFromObject = [];
-    for (var key in qqq) {
-      scratchpadArrayFromObject.push(<ScratchPadLetter Letter={key} LetterKnowledge={qqq[key]} cycleLetterButton={(l, lk) => {cycleLetterButtonParent(l, lk)}} ></ScratchPadLetter>);
+    for (var key in alphabetStatusParameter) {
+      scratchpadArrayFromObject.push(<ScratchPadLetter key={Math.random()} Letter={key} LetterKnowledge={alphabetStatusParameter[key]} cycleLetterButton={(l, lk) => {cycleLetterButtonParent(l, lk)}} ></ScratchPadLetter>);
     }
     return scratchpadArrayFromObject;
   }

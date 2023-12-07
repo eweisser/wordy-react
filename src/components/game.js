@@ -241,11 +241,12 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     }, []);
 
     const makeDialogueBox = (item) => {
-        const itemNumber = allDialogues.indexOf(item);
+        // const itemNumber = allDialogues.indexOf(item);
+        const randomKey = Math.random();
         // console.log("Item number "+itemNumber+" is...");
         // console.log(item);
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
-            return <div key={itemNumber} className="compDialogueContainer">
+            return <div key={randomKey} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
                         <div className="compDialogue">
                             <div className="compDialogueLeftCap"></div>
@@ -254,14 +255,14 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                         </div>
                     </div>
         } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
-            return <div tabIndex="0" key={itemNumber} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+            return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
                         <div className="playerOptionBox" onClick={restartGame}>{item.split("/")[0].slice(1)}</div>
                         <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item.split("/")[1]}</div>
                         <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
                         <div className="playerInputSpace"></div>
                     </div>
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
-            return <div key={itemNumber} className="playerInputContainer">
+            return <div key={randomKey} className="playerInputContainer">
                         <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>
                             <div className="playerInputLeftCap">{item[1]}</div>
                             {item[2]}
