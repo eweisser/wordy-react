@@ -2,6 +2,7 @@ import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import { ENG_STANDARD, ENG_MAX, GERMAN01, SPANISH01 } from './minilex.js';
+import { AI_AMY } from './ai-amy.js';
 import { AI_BEN } from './ai-ben.js';
 
 const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
@@ -67,7 +68,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
                     setGameStage("userGuess");
                 } else if (allDialogues[allDialogues.length - 1][2] === "2") {
-                    console.log(computerGuessRecord);
+                    // console.log(computerGuessRecord);
                     latestComputerWordChoice = computerPicksGuessWord();
                     setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+latestComputerWordChoice.toUpperCase()+".",["U","","..."]]) );
                     setGameStage("computerGuess");
@@ -117,7 +118,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         let roundCountAtCreation = computerRoundCount;
-                        console.log(computerGuessRecord);
+                        // console.log(computerGuessRecord);
                         if (userLetterCorrectNumber === 1) {
                             setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
@@ -224,7 +225,17 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
         // alert(activeLexicon);
         // alert(AI_BEN(activeLexicon));
         // var computerWordChoice = activeLexicon[(Math.floor(Math.random()*activeLexicon.length))];
-        var computerWordChoice = AI_BEN(activeLexicon);
+        var computerWordChoice = "";
+        switch (sendActiveAi) {
+            case "Amy":
+                computerWordChoice = AI_AMY(activeLexicon);
+                break;
+            case "Ben":
+                computerWordChoice = AI_BEN(activeLexicon,computerGuessRecord);
+                break;
+            default:
+                computerWordChoice = AI_AMY(activeLexicon);
+        }
         setLatestComputerGuessWord(computerWordChoice);
         return computerWordChoice;
     }
@@ -241,7 +252,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     }, []);
 
     const makeDialogueBox = (item) => {
-        // const itemNumber = allDialogues.indexOf(item);
         const randomKey = Math.random();
         // console.log("Item number "+itemNumber+" is...");
         // console.log(item);
