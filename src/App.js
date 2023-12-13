@@ -16,7 +16,6 @@ import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
-// AI actually tries to solve
 // save / load
 // minilex edits: consult another corpus
 // auto-refocus
@@ -136,6 +135,7 @@ function App() {
             <LexiconChoiceContainer>
               <LexiconChoiceButton Label="Maximal" pressLexiconChoiceButton={() => {setLexiconToUse("maximal")}}></LexiconChoiceButton>
               <LexiconChoiceButton Label="Standard" pressLexiconChoiceButton={() => {setLexiconToUse("standard")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="French" pressLexiconChoiceButton={() => {setLexiconToUse("french")}}></LexiconChoiceButton>
               <LexiconChoiceButton Label="German" pressLexiconChoiceButton={() => {setLexiconToUse("german")}}></LexiconChoiceButton>
               <LexiconChoiceButton Label="Spanish" pressLexiconChoiceButton={() => {setLexiconToUse("spanish")}}></LexiconChoiceButton>
             </LexiconChoiceContainer>

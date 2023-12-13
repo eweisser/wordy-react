@@ -1,6 +1,6 @@
 const AI_CLAIR = (activeLexicon, computerGuessRecord) => {
 
-    // It guessed AUDIO in ? turns.
+    // It guessed AUDIO in 100+ turns.
     // It guessed CLOUD in 41 turns.
     // It guessed MYTHS in 26 turns.
 
