@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { ENG_STANDARD, ENG_MAX, GERMAN01, SPANISH01 } from './minilex.js';
 import { AI_AMY } from './ai-amy.js';
 import { AI_BEN } from './ai-ben.js';
+import { AI_CLAIR } from './ai-clair.js';
 
 const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
 
@@ -184,7 +185,11 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                             sendMoodFromGameToApp("neutral");
                             break;
                     }
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
+                    if (userFeedback == "5") {
+                        setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Is my guess correct?",["U",userRoundCount,"..."]]) );
+                    } else {
+                        setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
+                    }
                     setGameStage("userGuess");
                 }
             }
@@ -222,9 +227,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     }
 
     const computerPicksGuessWord = () => {
-        // alert(activeLexicon);
-        // alert(AI_BEN(activeLexicon));
-        // var computerWordChoice = activeLexicon[(Math.floor(Math.random()*activeLexicon.length))];
         var computerWordChoice = "";
         switch (sendActiveAi) {
             case "Amy":
@@ -232,6 +234,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                 break;
             case "Ben":
                 computerWordChoice = AI_BEN(activeLexicon,computerGuessRecord);
+                break;
+            case "Clair":
+                computerWordChoice = AI_CLAIR(activeLexicon,computerGuessRecord);
                 break;
             default:
                 computerWordChoice = AI_AMY(activeLexicon);

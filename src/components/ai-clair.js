@@ -1,8 +1,9 @@
-const AI_BEN = (activeLexicon, computerGuessRecord) => {
+const AI_CLAIR = (activeLexicon, computerGuessRecord) => {
 
-    // It guessed AUDIO in 100+ turns.
-    // It guessed CLOUD in 57 turns.
-    // It guessed MYTHS in 79 turns.
+    // It guessed AUDIO in ? turns.
+    // It guessed CLOUD in 41 turns.
+    // It guessed MYTHS in 26 turns.
+
 
     var chosenWord = "";
     var scored_letters = {};
@@ -11,27 +12,26 @@ const AI_BEN = (activeLexicon, computerGuessRecord) => {
         scored_letters[String.fromCharCode(n)] = 0;
     }
 
-    console.log("Something else:");
     for (let word in computerGuessRecord) {                                     // take each word the computer has guessed
         for (let letter of word) {                                              // take each letter in that word
             switch (computerGuessRecord[word]) {
                 case 5:
-                    scored_letters[letter] = scored_letters[letter] + 2.5;
+                    scored_letters[letter] = scored_letters[letter] + 3.5;
                     break;
                 case 4:
-                    scored_letters[letter] = scored_letters[letter] + 1.5;
+                    scored_letters[letter] = scored_letters[letter] + 2.5;
                     break;
                 case 3:
                     scored_letters[letter] = scored_letters[letter] + 0.5;
                     break;
                 case 2:
-                    scored_letters[letter] = scored_letters[letter] - 0.5;
+                    scored_letters[letter] = scored_letters[letter] - 3.5;
                     break;
                 case 1:
-                    scored_letters[letter] = scored_letters[letter] - 1.5;
+                    scored_letters[letter] = scored_letters[letter] - 11.5;
                     break;
                 case 0:
-                    scored_letters[letter] = scored_letters[letter] - 2.5;
+                    scored_letters[letter] = scored_letters[letter] - 27.5;
                     break;
                 default:
             }
@@ -45,10 +45,12 @@ const AI_BEN = (activeLexicon, computerGuessRecord) => {
         } else {
             candidateWords[considerationWord] = 0;
         }
-    } while (Object.keys(candidateWords).length < 50);
+    } while (Object.keys(candidateWords).length < 700);
 
     var highestWordScore = -1000;
     var highestScoringWord = "";
+    var lowestWordScore = 1;
+    var lowestScoringWord = "";
 
     for (let word in candidateWords) {
         // console.log(word);
@@ -61,6 +63,10 @@ const AI_BEN = (activeLexicon, computerGuessRecord) => {
             highestWordScore = scoreSoFar;
             highestScoringWord = word;
         }
+        if (scoreSoFar < lowestWordScore) {
+            lowestWordScore = scoreSoFar;
+            lowestScoringWord = word;
+        }
     }
 
     // const highestWordScore = Math.max(Object.values(candidateWords));
@@ -72,10 +78,14 @@ const AI_BEN = (activeLexicon, computerGuessRecord) => {
     console.log("Candidate words (sample of lexicon):");
     console.log(candidateWords);
 
-
-    chosenWord = highestScoringWord;
+    if (Object.keys(computerGuessRecord).length > 7 && Object.keys(computerGuessRecord).length % 3 == 0) {
+        console.log("Choosing lowest scoring word!!!");
+        chosenWord = lowestScoringWord;
+    } else {
+        chosenWord = highestScoringWord;
+    }
     return chosenWord;
     
 }
 
-export { AI_BEN };
+export { AI_CLAIR };
