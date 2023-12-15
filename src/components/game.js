@@ -5,6 +5,7 @@ import { ENG_STANDARD, ENG_MAX, FRENCH01, GERMAN01, SPANISH01 } from './minilex.
 import { AI_AMY } from './ai-amy.js';
 import { AI_BEN } from './ai-ben.js';
 import { AI_CLAIR } from './ai-clair.js';
+import { AI_DAVID } from './ai-david.js';
 
 const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
 
@@ -240,6 +241,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                 break;
             case "Clair":
                 computerWordChoice = AI_CLAIR(activeLexicon,computerGuessRecord);
+                break;
+            case "David":
+                computerWordChoice = AI_DAVID(activeLexicon,computerGuessRecord);
                 break;
             default:
                 computerWordChoice = AI_AMY(activeLexicon);
