@@ -9,7 +9,7 @@ const AI_DAVID = (activeLexicon, computerGuessRecord) => {
     var scored_letters = {};
     var scored_word_sample = {};
     for (let n = 97; n <= 122; n++) {
-        scored_letters[String.fromCharCode(n)] = 0;
+        scored_letters[String.fromCharCode(n)] = 0;         // each letter is initially assigned a score of 0
     }
 
     for (let word in computerGuessRecord) {                                     // take each word the computer has guessed
