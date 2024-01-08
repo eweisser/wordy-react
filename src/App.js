@@ -136,8 +136,8 @@ function App() {
             <LexiconChoiceContainer>
               <LexiconChoiceButton Label="Maximal" pressLexiconChoiceButton={() => {setLexiconToUse("maximal")}}></LexiconChoiceButton>
               <LexiconChoiceButton Label="Standard" pressLexiconChoiceButton={() => {setLexiconToUse("standard")}}></LexiconChoiceButton>
-              <LexiconChoiceButton Label="French" pressLexiconChoiceButton={() => {setLexiconToUse("french")}}></LexiconChoiceButton>
-              <LexiconChoiceButton Label="German" pressLexiconChoiceButton={() => {setLexiconToUse("german")}}></LexiconChoiceButton>
+              {/* <LexiconChoiceButton Label="French" pressLexiconChoiceButton={() => {setLexiconToUse("french")}}></LexiconChoiceButton> */}
+              {/* <LexiconChoiceButton Label="German" pressLexiconChoiceButton={() => {setLexiconToUse("german")}}></LexiconChoiceButton> */}
               <LexiconChoiceButton Label="Spanish" pressLexiconChoiceButton={() => {setLexiconToUse("spanish")}}></LexiconChoiceButton>
             </LexiconChoiceContainer>
 
