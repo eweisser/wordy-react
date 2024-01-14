@@ -12,30 +12,29 @@ const AI_DAVID = (activeLexicon, computerGuessRecord) => {
         scored_letters[String.fromCharCode(n)] = 0;         // each letter is initially assigned a score of 0
     }
 
-    for (let word in computerGuessRecord) {                                     // take each word the computer has guessed
-        for (let letter of word) {                                              // take each letter in that word
-            switch (computerGuessRecord[word]) {
-                case 5:
-                    scored_letters[letter] = scored_letters[letter] + 3.5;
-                    break;
-                case 4:
-                    scored_letters[letter] = scored_letters[letter] + 2.5;
-                    break;
-                case 3:
-                    scored_letters[letter] = scored_letters[letter] + 0.5;
-                    break;
-                case 2:
-                    scored_letters[letter] = scored_letters[letter] - 3.5;
-                    break;
-                case 1:
-                    scored_letters[letter] = scored_letters[letter] - 11.5;
-                    break;
-                case 0:
-                    scored_letters[letter] = scored_letters[letter] - 27.5;
-                    break;
-                default:
+    console.log("Here...");
+    const guessed_words_joined = Object.keys(computerGuessRecord).join("");
+    console.log(guessed_words_joined);
+    for (let letter in scored_letters) {
+        let occurrences = 0;
+        let gross_score = 0;
+        for (let word in computerGuessRecord) {
+            if (word.search(letter) > -1) {
+                // console.log(letter + " in " + word);
+                occurrences++;
+                gross_score = gross_score + computerGuessRecord[word];
             }
         }
+        if (occurrences == 0) {
+            scored_letters[letter] = 5;
+        } else {
+            scored_letters[letter] = gross_score / occurrences;
+        }
+        // console.log(letter);
+        // let match = Array.from(guessed_words_joined.matchAll(letter));
+        // let occurrences = match.length;
+        console.log(letter);
+        console.log(scored_letters[letter]);
     }
 
     const candidateWords = {};
@@ -49,7 +48,7 @@ const AI_DAVID = (activeLexicon, computerGuessRecord) => {
 
     var highestWordScore = -1000;
     var highestScoringWord = "";
-    var lowestWordScore = 1;
+    var lowestWordScore = 1000;
     var lowestScoringWord = "";
 
     for (let word in candidateWords) {
