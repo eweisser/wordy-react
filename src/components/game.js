@@ -116,14 +116,13 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
             if (event.key === "Enter") {
                 var userGuessWord = allDialogues.slice(allDialogues.length-1)[0][2];
-                if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {
+                if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
                     } else {
                         let roundCountAtCreation = computerRoundCount;
-                        // console.log(computerGuessRecord);
                         if (userLetterCorrectNumber === 1) {
                             setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
@@ -133,7 +132,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     }
                     setGameStage("computerGuess");
                     setUserRoundCount(userRoundCount+1);
-                } else {
+                } else {            // if word is unacceptable...
                     setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.",["U"," ","..."]]) );
                 }
             }

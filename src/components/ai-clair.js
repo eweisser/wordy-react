@@ -75,6 +75,7 @@ const AI_CLAIR = (activeLexicon, computerGuessRecord) => {
     // console.log(computerGuessRecord);
     // console.log("Letter scores:");
     // console.log(scored_letters);
+    
     console.log("Candidate words (sample of lexicon):");
     console.log(candidateWords);
 
