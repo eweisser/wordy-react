@@ -1,7 +1,7 @@
 import '../App.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
-import { ENG_STANDARD, ENG_MAX, FRENCH01, GERMAN01, SPANISH01 } from './minilex.js';
+import { ENG_STANDARD, ENG_MAX, FRENCH01, GERMAN01, KOREAN01, SPANISH01 } from './minilex.js';
 import { AI_AMY } from './ai-amy.js';
 import { AI_BEN } from './ai-ben.js';
 import { AI_CLAIR } from './ai-clair.js';
@@ -36,6 +36,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
             break;
         case "german":
             activeLexicon = GERMAN01;
+            break;
+        case "korean":
+            activeLexicon = KOREAN01;
             break;
         case "spanish":
             activeLexicon = SPANISH01;

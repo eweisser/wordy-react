@@ -16,11 +16,12 @@ import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
-// save / load
+// save / load (branch 'saveload')
+// korean (branch 'korean')
 // minilex edits: consult another corpus
-// auto-refocus
-// mobile optimization
-// more detailed fox reactions--animations?
+// auto-refocus (branch 'refocus')
+// mobile optimization (branch 'mobile')
+// more detailed fox reactions--animations? (branch 'reactions')
 
 function App() {
 
@@ -139,6 +140,7 @@ function App() {
               {/* <LexiconChoiceButton Label="French" pressLexiconChoiceButton={() => {setLexiconToUse("french")}}></LexiconChoiceButton> */}
               {/* <LexiconChoiceButton Label="German" pressLexiconChoiceButton={() => {setLexiconToUse("german")}}></LexiconChoiceButton> */}
               <LexiconChoiceButton Label="Spanish" pressLexiconChoiceButton={() => {setLexiconToUse("spanish")}}></LexiconChoiceButton>
+              <LexiconChoiceButton Label="Korean" pressLexiconChoiceButton={() => {setLexiconToUse("korean")}}></LexiconChoiceButton>
             </LexiconChoiceContainer>
 
         </OptionsPage>}
