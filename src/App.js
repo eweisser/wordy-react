@@ -4,6 +4,7 @@ import AIMenu from './components/AI-menu.js';
 import Game from './components/game.js';
 import Fox from './components/fox.js';
 import ScratchPad from './components/scratchpad.js';
+import SaveButton from './components/savebutton.js';
 import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
@@ -16,7 +17,8 @@ import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
-// save / load
+// save / load "saveload"
+// "korean"
 // minilex edits: consult another corpus
 // auto-refocus
 // mobile optimization
@@ -93,15 +95,6 @@ function App() {
 
 
 
-
-
-
-
-
-
-
-
-
   return (
     <div id="ColorWrapper" className="GoldTheme">
     <div className="App">
@@ -154,7 +147,13 @@ function App() {
           {mappedScratchpadLettersObject}
           <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
         </ScratchPad>}
+
+        {alphabetAppear && <SaveButton>
+        </SaveButton>}
+
       </div>
+
+
     </div>
     </div>
   );
