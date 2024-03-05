@@ -21,7 +21,7 @@
 }
 
 .RightFrame {
-  /* background-color: #8c88; */
+  /* background-color: #8c84; */
   min-height: 100vh;
   align-items: center;
   justify-content: center;
@@ -255,6 +255,8 @@ div:focus {
 }
 
 #fox {
+  /* background-color: #00f2; */
+  border: 2px dashed #00f1;
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -263,7 +265,7 @@ div:focus {
 #scratchpad-container {
   align-items: center;
   /* background-color: #0f02; */
-  /* border: 1px dashed #00f; */
+  border: 2px dashed #00f1;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(6, 1fr);
@@ -312,6 +314,17 @@ div:focus {
   font-size: 1.4vw;
   grid-column: 2 / 6;
   text-align: center;
+}
+
+#save-button {
+  align-items: center;
+  /* background-color: #f002; */
+  border: 2px dashed #00f1;
+  /* display: grid; */
+  font-size: 1.4vw;
+  margin: auto;
+  margin-top: 10px;
+  width: 20vw;
 }
 
 

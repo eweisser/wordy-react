@@ -4,6 +4,7 @@ import AIMenu from './components/AI-menu.js';
 import Game from './components/game.js';
 import Fox from './components/fox.js';
 import ScratchPad from './components/scratchpad.js';
+import SaveButton from './components/savebutton.js';
 import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
@@ -94,15 +95,6 @@ function App() {
 
 
 
-
-
-
-
-
-
-
-
-
   return (
     <div id="ColorWrapper" className="GoldTheme">
     <div className="App">
@@ -156,7 +148,13 @@ function App() {
           {mappedScratchpadLettersObject}
           <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
         </ScratchPad>}
+
+        {alphabetAppear && <SaveButton>
+        </SaveButton>}
+
       </div>
+
+
     </div>
     </div>
   );
