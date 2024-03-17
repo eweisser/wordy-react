@@ -16,11 +16,13 @@ import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
 
-// save / load
+// koream (korean)
+// save / load (saveload)
 // minilex edits: consult another corpus
-// auto-refocus
-// mobile optimization
-// more detailed fox reactions--animations?
+// auto-refocus (refocus)
+// mobile optimization (mobile)
+// more detailed fox reactions--animations? (reactions)
+// what is branch "saving" ?
 
 function App() {
 
