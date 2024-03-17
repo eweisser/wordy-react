@@ -53,17 +53,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
 
 
+    const handleKeyDownTwo = (event) => {
 
-
-
-
-
-
-    const handleKeyDown = (event) => {
-
-
-
-
+        document.getElementById("dbox"+allDialogues.length).focus();
 
         if (gameStage === "decide who goes first") {
             setComputerRoundCount(1);
@@ -94,12 +86,15 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
 
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
+
             if (event.key.length === 1) {               // if user presses A-Z key...
                 const indexOfMostRecentBox = allDialogues.length-1;
                 const mostRecentBox = allDialogues.slice(indexOfMostRecentBox)[0];
-                if (mostRecentBox[2] === "...") {
+
+                if (mostRecentBox[2] === "...") {       // if user input box is 'empty'
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,event.key.toUpperCase()]]) );
-                } else {
+
+                } else {                                // if user input box already has some user input
                     var buildingUserGuess = allDialogues.slice(allDialogues.length-1)[0][2]+event.key.toUpperCase();
                     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,buildingUserGuess]]) );
                 }
@@ -191,7 +186,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                             sendMoodFromGameToApp("neutral");
                             break;
                     }
-                    if (userFeedback == "5") {
+                    if (userFeedback === "5") {
                         setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Is my guess correct?",["U",userRoundCount,"..."]]) );
                     } else {
                         setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
@@ -267,8 +262,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
     const makeDialogueBox = (item) => {
         const randomKey = Math.random();
-        // console.log("Item number "+itemNumber+" is...");
-        // console.log(item);
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={randomKey} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
@@ -286,8 +279,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                         <div className="playerInputSpace"></div>
                     </div>
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
-            return <div key={randomKey} className="playerInputContainer">
-                        <div tabIndex="0" onKeyDown={handleKeyDown} className="playerInput" ref={whoGoesFirstInput}>
+            var indexMaker = "dbox" + (allDialogues.indexOf(item)+1);
+            return <div key={randomKey} className="playerInputContainer" id={indexMaker}>
+                        <div tabIndex="0" className="playerInput" ref={whoGoesFirstInput}>
                             <div className="playerInputLeftCap">{item[1]}</div>
                             {item[2]}
                             <div className="playerInputRightCap"></div>
@@ -300,7 +294,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     var mappedDialogueBoxes = allDialogues.map(makeDialogueBox);
 
     return (
-        <div id="game">
+        <div tabIndex="0" id="game" onKeyDown={handleKeyDownTwo}>
             
             {mappedDialogueBoxes}
 
