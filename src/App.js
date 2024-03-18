@@ -20,7 +20,6 @@ import LexiconChoiceButton from './components/lexicon-choice-button.js';
 // save / load (branch 'saveload')
 // korean (branch 'korean')
 // minilex edits: consult another corpus
-// auto-refocus (branch 'refocus')
 // mobile optimization (branch 'mobile')
 // more detailed fox reactions--animations? (branch 'reactions')
 
