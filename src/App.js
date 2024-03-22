@@ -16,6 +16,7 @@ import ColorThemeContainer from './components/color-theme-container.js';
 import ColorChangeButton from './components/color-change-button.js';
 import LexiconChoiceContainer from './components/lexicon-choice-container.js';
 import LexiconChoiceButton from './components/lexicon-choice-button.js';
+import Timer from './components/timer.js';
 
 // save / load (branch 'saveload')
 // korean (branch 'korean')
@@ -31,6 +32,7 @@ function App() {
   const [howToPlayAppear, setHowToPlayAppear] = useState(false);
   const [optionsAppear, setOptionsAppear] = useState(false);
   const [alphabetAppear, setAlphabetAppear] = useState(false);
+  const [timerGo, setTimerGo] = useState(false);
   const [letterKnowledge, setLetterKnowledge] = useState("letter_neutral");
 
   const [activeAi, setActiveAi] = useState(null);
@@ -80,7 +82,8 @@ function App() {
 
   const handleFoxMoodCallback = (moodData) => {
     setFoxMood(moodData);
-    setInterval(resetFace, 2000);
+    setTimerGo(true);
+    // setInterval(resetFace, 2000);
   }
 
   const resetFace = () => {
@@ -96,6 +99,7 @@ function App() {
 
   return (
     <div id="ColorWrapper" className="GoldTheme">
+    {timerGo && <Timer zeroFace={() => {resetFace();}} />}
     <div className="App">
       <div className="LeftFrame">
         {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
