@@ -21,9 +21,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     var latestComputerWordChoice = "";
     const [latestComputerGuessWord, setLatestComputerGuessWord] = useState(".....");
 
-    if (computerSecretWord === ".....") {
-        setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
-    }
     switch(lexiconToUse) {
         case "standard":
             activeLexicon = ENG_STANDARD;
@@ -47,6 +44,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
             break;
     }
 
+    if (computerSecretWord === ".....") {
+        setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
+    }
+
     // const resetFace = () => {
     //     sendMoodFromGameToApp("neutral");
     // }
@@ -55,81 +56,43 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
     const handleKeyDownTwo = (event) => {
 
+        const collection = document.getElementsByTagName("input");
+        const previousBoxes = allDialogues.slice(0,allDialogues.length-1);
+
         document.getElementById("dbox"+allDialogues.length).focus();
 
         if (gameStage === "decide who goes first") {
             setComputerRoundCount(1);
             setUserRoundCount(1);
-            // if ("12".includes(event.key)) {
-            //     const newDialogueBox = ["U"," ",event.key];
-            //     setAllDialogues(allDialogues.slice(0,1).concat([newDialogueBox]) );     // if the user enters "1" or "2", make that the content of the most recent box
-            // } else if (event.key === "Enter") {
-            //     if (allDialogues[allDialogues.length - 1][2] === "1") {
-            //         setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
-            //         setGameStage("userGuess");
-            //     } else if (allDialogues[allDialogues.length - 1][2] === "2") {
-            //         // console.log(computerGuessRecord);
-            //         latestComputerWordChoice = computerPicksGuessWord();
-            //         setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+latestComputerWordChoice.toUpperCase()+".",["U","","..."]]) );
-            //         setGameStage("computerGuess");
-            //         setComputerRoundCount(2);
-            //     }
-            // }
-
-
-
-
-
-
-
-
 
 
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
 
-            if (event.key.length === 1) {               // if user presses A-Z key...
-                const indexOfMostRecentBox = allDialogues.length-1;
-                const mostRecentBox = allDialogues.slice(indexOfMostRecentBox)[0];
-
-                if (mostRecentBox[2] === "...") {       // if user input box is 'empty'
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,event.key.toUpperCase()]]) );
-
-                } else {                                // if user input box already has some user input
-                    var buildingUserGuess = allDialogues.slice(allDialogues.length-1)[0][2]+event.key.toUpperCase();
-                    setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([["U",userRoundCount,buildingUserGuess]]) );
-                }
-            }
-
-            if (event.key === "Backspace") {
-                let mostRecentBoxText = allDialogues.slice(allDialogues.length-1)[0][2];
-                let allPreviousBoxes = allDialogues.slice(0,allDialogues.length-1);
-                if (mostRecentBoxText === "...") {
-                } else if (mostRecentBoxText.length === 1) {         // if there's only one character left, replace it with "..."
-                    setAllDialogues(allPreviousBoxes.concat([["U",userRoundCount,"..."]]));
-                } else {                                            // if there's more than one character, delete the last one
-                    var shorteningUserGuess = mostRecentBoxText.slice(0,mostRecentBoxText.length-1);
-                    setAllDialogues(allPreviousBoxes.concat([["U",userRoundCount,shorteningUserGuess]]));
-                }
-            }
-
             if (event.key === "Enter") {
-                var userGuessWord = allDialogues.slice(allDialogues.length-1)[0][2];
+                console.log(computerSecretWord);
+                var userGuessWord = collection[collection.length-1].value;
+
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
+
+                    const dialogueBoxWithNewestUserGuess = [["U",userRoundCount,userGuessWord]];
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
+
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
                         setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
+
                     } else {
                         let roundCountAtCreation = computerRoundCount;
                         if (userLetterCorrectNumber === 1) {
                             setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
+                            setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess,["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         }
                         setComputerRoundCount(computerRoundCount+1);
                     }
                     setGameStage("computerGuess");
                     setUserRoundCount(userRoundCount+1);
+                    
                 } else {            // if word is unacceptable...
                     setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.",["U"," ","..."]]) );
                 }
@@ -147,14 +110,16 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
 
         } else if (gameStage === "computerGuess") {         // user's numerical 1-5 response to computer's guess
-            if (event.key.charCodeAt(0) >= 48 && event.key.charCodeAt(0) <= 53) {
-                let newDialogueBox = ["U"," ",event.key];
-                setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
-            }
+            // if (event.key.charCodeAt(0) >= 48 && event.key.charCodeAt(0) <= 53) {
+            //     let newDialogueBox = ["U"," ",event.key];
+            //     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
+            // }
             if (event.key === "Enter") {
-                const userFeedback = allDialogues[allDialogues.length - 1][2];
-                if (allDialogues[allDialogues.length - 1][2].charCodeAt(0) >= 48 && allDialogues[allDialogues.length - 1][2].charCodeAt(0) <= 53) {
-                    // setComputerGuessRecord(computerGuessRecord.concat([[latestComputerGuessWord,userFeedback]]));
+                const userFeedback = collection[collection.length-1].value;
+                const dialogueBoxWithNewestUserAnswer = [["U"," ",userFeedback]];
+
+                if (userFeedback.charCodeAt(0) >= 48 && userFeedback.charCodeAt(0) <= 53) {
+                    
                     const dummyObject = computerGuessRecord;
                     dummyObject[latestComputerGuessWord] = parseInt(userFeedback);
                     setComputerGuessRecord(dummyObject);
@@ -214,12 +179,117 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
     const computerEvaluatesUserGuess = (userGuessWord) => {
         var correctLetterRunningSum = 0;
+        var computerSecretWordForProcess = "";
+        if (lexiconToUse === "korean") {
+            userGuessWord = parseHangul(userGuessWord);
+            computerSecretWordForProcess = parseHangul(computerSecretWord);
+        } else {
+            computerSecretWordForProcess = computerSecretWord;
+        }
         for (let letter of userGuessWord) {
             if (computerSecretWord.toUpperCase().includes(letter)) {
                 correctLetterRunningSum = correctLetterRunningSum + 1;
             }
         }
         return correctLetterRunningSum;
+    }
+
+    const parseHangul = (actualHangulWord) => {
+        var parsedHangulWord = "";
+        const batchimList = "ㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎXㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼ";
+
+        for (let syllableBlock of actualHangulWord) {
+            if (syllableBlock.charCodeAt(0) >= 44032 && syllableBlock.charCodeAt(0) < 44620) {
+                parsedHangulWord += "ㄱ";
+            } else if (syllableBlock.charCodeAt(0) >= 44620 && syllableBlock.charCodeAt(0) < 45208) {
+                parsedHangulWord += "ㄲ";
+            } else if (syllableBlock.charCodeAt(0) >= 45208 && syllableBlock.charCodeAt(0) < 45796) {
+                parsedHangulWord += "ㄴ";
+            } else if (syllableBlock.charCodeAt(0) >= 45796 && syllableBlock.charCodeAt(0) < 46384) {
+                parsedHangulWord += "ㄷ";
+            } else if (syllableBlock.charCodeAt(0) >= 46384 && syllableBlock.charCodeAt(0) < 46972) {
+                parsedHangulWord += "ㄸ";
+            } else if (syllableBlock.charCodeAt(0) >= 46972 && syllableBlock.charCodeAt(0) < 47560) {
+                parsedHangulWord += "ㄹ";
+            } else if (syllableBlock.charCodeAt(0) >= 47560 && syllableBlock.charCodeAt(0) < 48148) {
+                parsedHangulWord += "ㅁ";
+            } else if (syllableBlock.charCodeAt(0) >= 48148 && syllableBlock.charCodeAt(0) < 48736) {
+                parsedHangulWord += "ㅂ";
+            } else if (syllableBlock.charCodeAt(0) >= 48736 && syllableBlock.charCodeAt(0) < 49324) {
+                parsedHangulWord += "ㅃ";
+            } else if (syllableBlock.charCodeAt(0) >= 49324 && syllableBlock.charCodeAt(0) < 49912) {
+                parsedHangulWord += "ㅅ";
+            } else if (syllableBlock.charCodeAt(0) >= 49912 && syllableBlock.charCodeAt(0) < 50500) {
+                parsedHangulWord += "ㅆ";
+            } else if (syllableBlock.charCodeAt(0) >= 50500 && syllableBlock.charCodeAt(0) < 51088) {
+                parsedHangulWord += "ㅇ";
+            } else if (syllableBlock.charCodeAt(0) >= 51088 && syllableBlock.charCodeAt(0) < 51676) {
+                parsedHangulWord += "ㅈ";
+            } else if (syllableBlock.charCodeAt(0) >= 51676 && syllableBlock.charCodeAt(0) < 52264) {
+                parsedHangulWord += "ㅉ";
+            } else if (syllableBlock.charCodeAt(0) >= 52264 && syllableBlock.charCodeAt(0) < 52852) {
+                parsedHangulWord += "ㅊ";
+            } else if (syllableBlock.charCodeAt(0) >= 52852 && syllableBlock.charCodeAt(0) < 53440) {
+                parsedHangulWord += "ㅋ";
+            } else if (syllableBlock.charCodeAt(0) >= 53440 && syllableBlock.charCodeAt(0) < 54028) {
+                parsedHangulWord += "ㅌ";
+            } else if (syllableBlock.charCodeAt(0) >= 54028 && syllableBlock.charCodeAt(0) < 54616) {
+                parsedHangulWord += "ㅍ";
+            } else if (syllableBlock.charCodeAt(0) >= 54616 && syllableBlock.charCodeAt(0) < 55204) {
+                parsedHangulWord += "ㅎ";
+            }
+
+            if (syllableBlock.charCodeAt(0) % 588 >= 520 && syllableBlock.charCodeAt(0) % 588 < 548) {
+                parsedHangulWord += "ㅏ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 548 && syllableBlock.charCodeAt(0) % 588 < 576) {
+                parsedHangulWord += "ㅐ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 576 || syllableBlock.charCodeAt(0) % 588 < 16) {
+                parsedHangulWord += "ㅑ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 16 && syllableBlock.charCodeAt(0) % 588 < 44) {
+                parsedHangulWord += "ㅒ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 44 && syllableBlock.charCodeAt(0) % 588 < 72) {
+                parsedHangulWord += "ㅓ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 72 && syllableBlock.charCodeAt(0) % 588 < 100) {
+                parsedHangulWord += "ㅔ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 100 && syllableBlock.charCodeAt(0) % 588 < 128) {
+                parsedHangulWord += "ㅕ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 128 && syllableBlock.charCodeAt(0) % 588 < 156) {
+                parsedHangulWord += "ㅖ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 156 && syllableBlock.charCodeAt(0) % 588 < 184) {
+                parsedHangulWord += "ㅗ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 184 && syllableBlock.charCodeAt(0) % 588 < 212) {
+                parsedHangulWord += "ㅘ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 212 && syllableBlock.charCodeAt(0) % 588 < 240) {
+                parsedHangulWord += "ㅙ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 240 && syllableBlock.charCodeAt(0) % 588 < 268) {
+                parsedHangulWord += "ㅚ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 268 && syllableBlock.charCodeAt(0) % 588 < 296) {
+                parsedHangulWord += "ㅛ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 296 && syllableBlock.charCodeAt(0) % 588 < 324) {
+                parsedHangulWord += "ㅜ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 324 && syllableBlock.charCodeAt(0) % 588 < 352) {
+                parsedHangulWord += "ㅝ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 352 && syllableBlock.charCodeAt(0) % 588 < 380) {
+                parsedHangulWord += "ㅞ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 380 && syllableBlock.charCodeAt(0) % 588 < 408) {
+                parsedHangulWord += "ㅟ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 408 && syllableBlock.charCodeAt(0) % 588 < 436) {
+                parsedHangulWord += "ㅠ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 436 && syllableBlock.charCodeAt(0) % 588 < 464) {
+                parsedHangulWord += "ㅡ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 464 && syllableBlock.charCodeAt(0) % 588 < 492) {
+                parsedHangulWord += "ㅢ";
+            } else if (syllableBlock.charCodeAt(0) % 588 >= 492 && syllableBlock.charCodeAt(0) % 588 < 520) {
+                parsedHangulWord += "ㅣ";
+            }
+
+            if (syllableBlock.charCodeAt(0) % 28 === 16) {
+            } else {
+                parsedHangulWord += batchimList[syllableBlock.charCodeAt(0) % 28];
+            }
+
+        }
+        return parsedHangulWord;
     }
 
     const computerPicksGuessWord = () => {
@@ -297,7 +367,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
             return <div key={randomKey} className="playerInputContainer" id={indexMaker}>
                         <div tabIndex="0" className="playerInput" ref={whoGoesFirstInput}>
                             <div className="playerInputLeftCap">{item[1]}</div>
-                            {item[2]}
+                            <input></input>
                             <div className="playerInputRightCap"></div>
                         </div>
                         <div className="playerInputSpace"></div>
