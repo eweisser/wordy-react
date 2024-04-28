@@ -48,10 +48,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
         setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
     }
 
-    // const resetFace = () => {
-    //     sendMoodFromGameToApp("neutral");
-    // }
-
 
 
     const handleKeyDownTwo = (event) => {
@@ -59,7 +55,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
         const collection = document.getElementsByTagName("input");
         const previousBoxes = allDialogues.slice(0,allDialogues.length-1);
 
-        document.getElementById("dbox"+allDialogues.length).focus();
+        if (document.getElementById("dbox"+allDialogues.length)) {
+            document.getElementById("dbox"+allDialogues.length).focus();
+        }
 
         if (gameStage === "decide who goes first") {
             setComputerRoundCount(1);
@@ -123,6 +121,17 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     const dummyObject = computerGuessRecord;
                     dummyObject[latestComputerGuessWord] = parseInt(userFeedback);
                     setComputerGuessRecord(dummyObject);
+
+                    console.log("^^^^^^^^^^^^^^^^^^");
+                    console.log("the previousBoxes variable:");
+                    console.log(previousBoxes);
+
+                    // setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer));
+
+                    console.log("^^^^^^^^^^^^^^^^^^");
+                    console.log("the dialogueBoxWithNewestUserAnswer variable:");
+                    console.log(dialogueBoxWithNewestUserAnswer);
+
                     switch(userFeedback) {                      // change fox's eyes/expression based on response
                         case "5":
                             sendMoodFromGameToApp("shocked");
@@ -147,9 +156,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                             break;
                     }
                     if (userFeedback === "5") {
-                        setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Is my guess correct?",["U",userRoundCount,"..."]]) );
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Is my guess correct?","@Yes / No"] ));
+                        // setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Is my guess correct?","@Yes / No"]) );
                     } else {
-                        setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]]) );
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
                     }
                     setGameStage("userGuess");
                 }
@@ -347,11 +357,19 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                             <div className="compDialogueRightCap">{item.split("*")[1]}</div>
                         </div>
                     </div>
+
+
         } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
             if (item.split("/")[0] === "@Player goes first ") {
                 return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
                             <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item.split("/")[0].slice(1)}</div>
                             <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("computer")}>{item.split("/")[1]}</div>
+                            <div className="playerInputSpace"></div>
+                        </div>
+            } else if (item.split("/")[0] === "@Yes ") {
+                return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                            <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item.split("/")[0].slice(1)}</div>
+                            <div className="playerOptionBox" onClick={() => handleKeyDownTwo()}>{item.split("/")[1]}</div>
                             <div className="playerInputSpace"></div>
                         </div>
             } else if (item.split("/")[0] === "@Play this AI again ") {
@@ -362,20 +380,38 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                             <div className="playerInputSpace"></div>
                         </div>
             }
+
+
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
             var indexMaker = "dbox" + (allDialogues.indexOf(item)+1);
-            return <div key={randomKey} className="playerInputContainer" id={indexMaker}>
+
+            if (allDialogues.indexOf(item)+1 === allDialogues.length) {         // if this is the last entry in allDialogues, make an input
+                return <div key={randomKey} className="playerInputContainer" id={indexMaker}>
                         <div tabIndex="0" className="playerInput" ref={whoGoesFirstInput}>
                             <div className="playerInputLeftCap">{item[1]}</div>
-                            <input></input>
+                            <input defaultValue={item[2]}></input>
                             <div className="playerInputRightCap"></div>
                         </div>
                         <div className="playerInputSpace"></div>
                     </div>
+
+            } else {                                                            // if this is NOT the last entry in allDialogues, make a normal div
+                return <div key={randomKey} className="playerInputContainer">
+                        <div tabIndex="0" className="playerInput" ref={whoGoesFirstInput}>
+                            <div className="playerInputLeftCap">{item[1]}</div>
+                            <div>{item[2]}</div>
+                            <div className="playerInputRightCap"></div>
+                        </div>
+                        <div className="playerInputSpace"></div>
+                    </div>
+            }
         }       // end of handling case--player input box
     }           // end of makeDialogueBox
 
     var mappedDialogueBoxes = allDialogues.map(makeDialogueBox);
+    console.log("*************************");
+    console.log("Here is the allDialogues item:");
+    console.log(allDialogues);
 
     return (
         <div tabIndex="0" id="game" onKeyDown={handleKeyDownTwo}>

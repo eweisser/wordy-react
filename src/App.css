@@ -743,6 +743,19 @@ div:focus {
   stroke: #705;
 }
 
+input {
+  background-color: #0000;
+  border: 0px solid #0001;
+  color: #830;
+  font-family: 'Segoe UI';
+  font-size: 12pt;
+  font-weight: 700;
+  margin: 0px;
+  outline: none;
+  padding: 0px;
+  text-align: center;
+}
+
 
 @media (max-width: 600px) {
 
