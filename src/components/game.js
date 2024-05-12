@@ -49,7 +49,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     }
 
 
-
     const handleKeyDownTwo = (event) => {
 
         const collection = document.getElementsByTagName("input");
@@ -67,12 +66,17 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
         } else if (gameStage === "userGuess") {         // user's 5 letter guess
 
             if (event.key === "Enter") {
+                console.log("secret word is...");
                 console.log(computerSecretWord);
                 var userGuessWord = collection[collection.length-1].value;
+                console.log();
+                // console.log("user guess is:");
+                // console.log(userGuessWord);
 
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
 
                     const dialogueBoxWithNewestUserGuess = [["U",userRoundCount,userGuessWord]];
+                    // console.log(dialogueBoxWithNewestUserGuess);
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
 
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
@@ -82,7 +86,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     } else {
                         let roundCountAtCreation = computerRoundCount;
                         if (userLetterCorrectNumber === 1) {
-                            setAllDialogues(allDialogues.concat(["!* *You got "+userLetterCorrectNumber+" letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
+                            setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess,["!* *You got 1 letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         } else {
                             setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess,["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
                         }
