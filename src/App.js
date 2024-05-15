@@ -147,13 +147,17 @@ function App() {
 
         {<Fox Mood={foxMood} />}
 
-        {alphabetAppear && <ScratchPad>
-          {mappedScratchpadLettersObject}
-          <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
-        </ScratchPad>}
+        <div className="scratch-and-save">
 
-        {alphabetAppear && <SaveButton>
-        </SaveButton>}
+          {alphabetAppear && <ScratchPad>
+            {mappedScratchpadLettersObject}
+            <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
+          </ScratchPad>}
+
+          {alphabetAppear && <SaveButton>
+          </SaveButton>}
+
+        </div>
 
       </div>
 

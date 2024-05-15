@@ -254,6 +254,18 @@ div:focus {
   padding: 10px;
 }
 
+
+
+
+
+
+
+
+
+
+
+/* --------------- SECTION: right frame --------------------------------------------------------------- */
+
 #fox {
   /* background-color: #00f2; */
   border: 2px dashed #00f1;
@@ -318,13 +330,16 @@ div:focus {
 
 #save-button {
   align-items: center;
-  /* background-color: #f002; */
   border: 2px dashed #00f1;
-  /* display: grid; */
   font-size: 1.4vw;
   margin: auto;
   margin-top: 10px;
   width: 20vw;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 
@@ -342,6 +357,8 @@ div:focus {
 
 
 
+
+/* --------------- SECTION: colors --------------------------------------------------------------- */
 
 .GoldTheme .App {
   background-color: #fc0; 
@@ -756,6 +773,7 @@ input {
   text-align: center;
 }
 
+/* --------------------------- MOBILE ------------------------------------------------------------------------------------------ */
 
 @media (max-width: 600px) {
 
@@ -785,9 +803,10 @@ input {
   }
 
   .RightFrame {
-    /* background-color: #0f02; */
-    /* border: 1px dashed blue; */
-    display: flex;
+    /* background-color: #fff; */
+    /* border-top: 1px dashed blue; */
+    display: grid;
+    grid-template-columns: 55% 45%;
     height: 100%;
     width: 100%;
     min-height: auto;
@@ -806,16 +825,60 @@ input {
     width: 100%;
   }
 
+
+
+  
   #fox {
-    /* border: 1px dashed blue; */
+    grid-column: 1 / 2;
     height: 20vh;
     width: auto;
+    border: none;
+  }
+
+  .scratch-and-save {
+    grid-column: 2 / 3;
+    height: 100%;
   }
 
   #scratchpad-container {
-    /* border: 1px dashed #00f; */
-    height: 20vh;
+    /* background-color: #0000ff0c; */
+    margin: 0;
+    height: 21vh;
+    width: auto;
+    font-size: 2.2vh;
+    border: none;
+    text-align: center;
   }
+
+  .scratchpad-text {
+    transform: translate(0%, 6%);
+  }
+
+  .letter_neutral, .letter_eliminated, .letter_proven {
+    font-size: inherit;
+    width: 3.5vh;
+  }
+
+  #save-button {
+    font-size: inherit;
+    height: 4vh;
+    margin: 0;
+    border: none;
+    width: auto;
+  }
+
+  .scratch-pad-reset-button {
+    font-size: inherit;
+    text-align: center;
+    margin: auto;
+  }
+
+  #save-button {
+  align-items: center;
+  font-size: inherit;
+}
+
+
 
 
 
