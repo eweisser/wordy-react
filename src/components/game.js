@@ -126,15 +126,8 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                     dummyObject[latestComputerGuessWord] = parseInt(userFeedback);
                     setComputerGuessRecord(dummyObject);
 
-                    console.log("^^^^^^^^^^^^^^^^^^");
-                    console.log("the previousBoxes variable:");
-                    console.log(previousBoxes);
-
                     // setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer));
 
-                    console.log("^^^^^^^^^^^^^^^^^^");
-                    console.log("the dialogueBoxWithNewestUserAnswer variable:");
-                    console.log(dialogueBoxWithNewestUserAnswer);
 
                     switch(userFeedback) {                      // change fox's eyes/expression based on response
                         case "5":
@@ -350,6 +343,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
          }
     }, []);
 
+    const afterNonWinningComputerGuess = () => {
+        setAllDialogues(allDialogues.concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
+    }
+
     const makeDialogueBox = (item) => {
         const randomKey = Math.random();
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
@@ -373,7 +370,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
             } else if (item.split("/")[0] === "@Yes ") {
                 return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
                             <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => handleKeyDownTwo()}>{item.split("/")[1]}</div>
+                            <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item.split("/")[1]}</div>
                             <div className="playerInputSpace"></div>
                         </div>
             } else if (item.split("/")[0] === "@Play this AI again ") {
@@ -413,9 +410,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     }           // end of makeDialogueBox
 
     var mappedDialogueBoxes = allDialogues.map(makeDialogueBox);
-    console.log("*************************");
-    console.log("Here is the allDialogues item:");
-    console.log(allDialogues);
 
     return (
         <div tabIndex="0" id="game" onKeyDown={handleKeyDownTwo}>
