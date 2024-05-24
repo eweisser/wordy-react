@@ -20,6 +20,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
     var activeLexicon = ENG_STANDARD;
     var latestComputerWordChoice = "";
     const [latestComputerGuessWord, setLatestComputerGuessWord] = useState(".....");
+    const [computerGuessingOn, setComputerGuessingOn] = useState(true);
 
     switch(lexiconToUse) {
         case "standard":
@@ -351,6 +352,11 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
         setAllDialogues(allDialogues.concat(["!* *Okay, what now?","@Keep guessing the computer's word / Play this AI again / Main menu"] ));
     }
 
+    const continueGuessingWhenComputerWins = () => {
+        setComputerGuessingOn(false);
+        setAllDialogues(allDialogues.concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
+    }
+
 
 
 
@@ -382,9 +388,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                         </div>
             } else if (item.split("/")[0] === "@Keep guessing the computer's word ") {
                 return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                            <div className="playerOptionBox" onClick={() => afterWinningComputerGuess()}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item.split("/")[1]}</div>
-                            <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item.split("/")[2]}</div>
+                            <div className="playerOptionBox" onClick={() => continueGuessingWhenComputerWins()}>{item.split("/")[0].slice(1)}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[1]}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
                             <div className="playerInputSpace"></div>
                         </div>
             } else if (item.split("/")[0] === "@Play this AI again ") {
