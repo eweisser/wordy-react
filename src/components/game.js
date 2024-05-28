@@ -77,23 +77,33 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
 
                     const dialogueBoxWithNewestUserGuess = [["U",userRoundCount,userGuessWord]];
-                    // console.log(dialogueBoxWithNewestUserGuess);
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
 
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
-                        setAllDialogues(allDialogues.concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
 
                     } else {
                         let roundCountAtCreation = computerRoundCount;
-                        if (userLetterCorrectNumber === 1) {
-                            setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess,["!* *You got 1 letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
+                        let whatToAdd = [];
+                        if (userLetterCorrectNumber === 1 && computerGuessingOn) {
+                            whatToAdd = ["!* *You got 1 letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]];
+                        } else if (computerGuessingOn) {
+                            whatToAdd = ["!* *You got " +userLetterCorrectNumber+ " letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]];
+                        } else if (userLetterCorrectNumber === 1) {
+                            whatToAdd = ["!* *You got 1 letter.","!*"+roundCountAtCreation+"*Guess again.",["U","","..."]];
                         } else {
-                            setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess,["!* *You got "+userLetterCorrectNumber+" letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]]) );
+                            whatToAdd = ["!* *You got " +userLetterCorrectNumber+ " letters.","!*"+roundCountAtCreation+"*Guess again.",["U","","..."]];
                         }
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat(whatToAdd));
+                        console.log("allDialogues:");
+                        console.log(allDialogues);
+                        console.log();
                         setComputerRoundCount(computerRoundCount+1);
                     }
-                    setGameStage("computerGuess");
+                    if (computerGuessingOn) {
+                        setGameStage("computerGuess");
+                    }
                     setUserRoundCount(userRoundCount+1);
                     
                 } else {            // if word is unacceptable...
