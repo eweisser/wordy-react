@@ -88,7 +88,18 @@ function App() {
 
   const resetFace = () => {
     setFoxMood("neutral");
-}
+  }
+
+  const downloadTxtFile = () => {
+    // alert("Hi!");
+    const texts = ["line 1", "line 2", "line 3"];
+    const fileToSave = new Blob(texts, {type: 'text/plain'});
+    const element = document.createElement("a");
+    element.href = URL.createObjectURL(fileToSave);
+    element.download = "100ideas.txt";
+    document.body.appendChild(element);
+    element.click();
+  }
 
 
 
@@ -154,7 +165,7 @@ function App() {
             <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
           </ScratchPad>}
 
-          {alphabetAppear && <SaveButton>
+          {alphabetAppear && <SaveButton triggerSave={downloadTxtFile}>
           </SaveButton>}
 
         </div>
