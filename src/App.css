@@ -20,6 +20,10 @@
   text-align: center;
 }
 
+.BrownDividerContainer {
+  display: none;
+}
+
 .RightFrame {
   /* background-color: #8c84; */
   min-height: 100vh;
@@ -773,7 +777,20 @@ input {
   text-align: center;
 }
 
+
+
+
+
+
 /* --------------------------- MOBILE ------------------------------------------------------------------------------------------ */
+/* --------------------------- MOBILE ------------------------------------------------------------------------------------------ */
+/* --------------------------- MOBILE ------------------------------------------------------------------------------------------ */
+
+
+
+
+
+
 
 @media (max-width: 600px) {
 
@@ -782,7 +799,7 @@ input {
     background-color: #000;
     /* border: 5px solid #000; */
     display: grid;
-    grid-template-rows: 75% 25%;
+    grid-template-rows: 70% 5% 25%;
     height: 100vh;
     justify-content: center;
     min-height: 98vh;
@@ -802,6 +819,26 @@ input {
     grid-column: 1 / 6;
   }
 
+  .BrownDividerContainer {
+    display: block;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    grid-row: 2 / 3;
+    grid-column: 1 / 6;
+  }
+
+  .BrownDivider {
+    background-color: #830;
+    height: 3px;
+    width: 70%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
   .RightFrame {
     /* background-color: #fff; */
     /* border-top: 1px dashed blue; */
@@ -811,7 +848,7 @@ input {
     width: 100%;
     min-height: auto;
     min-width: auto;
-    grid-row: 2 / 3;
+    grid-row: 3 / 4;
     grid-column: 1 / 6;
   }
 

@@ -98,14 +98,12 @@ function App() {
 
 
   const downloadTxtFile = () => {
-    // const texts = ["line 1", "line 2", "line 3"];
     const texts = ["line 1", "line 2", "line 3"];
     const fileToSave = new Blob(upperLevelAllDialogues, {type: 'text/plain'});
     const element = document.createElement("a");
     element.href = URL.createObjectURL(fileToSave);
     element.download = "word_guessing_game.txt";
     document.body.appendChild(element);
-    // alert(sendGuessLog);
     element.click();
   }
 
@@ -159,6 +157,10 @@ function App() {
 
         </OptionsPage>}
 
+      </div>
+
+      <div className="BrownDividerContainer">
+        <div className="BrownDivider"></div>
       </div>
 
 
