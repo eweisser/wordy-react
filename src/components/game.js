@@ -7,7 +7,7 @@ import { AI_BEN } from './ai-ben.js';
 import { AI_CLAIR } from './ai-clair.js';
 import { AI_DAVID } from './ai-david.js';
 
-const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}) => {
+const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog, lexiconToUse}) => {
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
@@ -371,6 +371,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, lexiconToUse}
 
 
     const makeDialogueBox = (item) => {
+        sendGuessLog(allDialogues);
         const randomKey = Math.random();
         if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
             return <div key={randomKey} className="compDialogueContainer">

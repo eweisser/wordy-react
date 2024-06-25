@@ -34,6 +34,7 @@ function App() {
   const [alphabetAppear, setAlphabetAppear] = useState(false);
   const [timerGo, setTimerGo] = useState(false);
   const [letterKnowledge, setLetterKnowledge] = useState("letter_neutral");
+  const [upperLevelAllDialogues, setUpperLevelAllDialogues] = useState(null);
 
   const [activeAi, setActiveAi] = useState(null);
   const [resetStatus, setResetStatus] = useState("[reset]");
@@ -90,14 +91,21 @@ function App() {
     setFoxMood("neutral");
   }
 
+  const updateUpperLevelGuessLog = (paramAllDialogues) => {
+    setUpperLevelAllDialogues(paramAllDialogues);
+  }
+
+
+
   const downloadTxtFile = () => {
-    // alert("Hi!");
+    // const texts = ["line 1", "line 2", "line 3"];
     const texts = ["line 1", "line 2", "line 3"];
-    const fileToSave = new Blob(texts, {type: 'text/plain'});
+    const fileToSave = new Blob(upperLevelAllDialogues, {type: 'text/plain'});
     const element = document.createElement("a");
     element.href = URL.createObjectURL(fileToSave);
-    element.download = "100ideas.txt";
+    element.download = "word_guessing_game.txt";
     document.body.appendChild(element);
+    // alert(sendGuessLog);
     element.click();
   }
 
@@ -122,7 +130,7 @@ function App() {
           <AIMenuButton AiName="David" pickAi={() => {setActiveAi("David"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
         </AIMenu>}
 
-        {gameAppear && <Game lexiconToUse={lexiconToUse} sendMoodFromGameToApp={handleFoxMoodCallback} sendActiveAi={activeAi} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
+        {gameAppear && <Game sendGuessLog={updateUpperLevelGuessLog} sendActiveAi={activeAi} sendMoodFromGameToApp={handleFoxMoodCallback} lexiconToUse={lexiconToUse} newGamePickAi={(clue) => {setGameAppear(false); setAiMenuAppear(clue); setStartMenuAppear(!clue); setAlphabetAppear(false)}} />}
 
         {howToPlayAppear && <HowToPlay returnToStartMenu={() => {setStartMenuAppear(true); setAlphabetAppear(false); setHowToPlayAppear(false)}} />}
 
