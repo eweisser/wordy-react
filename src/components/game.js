@@ -71,8 +71,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                 console.log(computerSecretWord);
                 var userGuessWord = collection[collection.length-1].value;
                 console.log();
-                // console.log("user guess is:");
-                // console.log(userGuessWord);
 
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
 
@@ -204,7 +202,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
         } else {
             computerSecretWordForProcess = computerSecretWord;
         }
-        for (let letter of userGuessWord) {
+        for (let letter of userGuessWord.toUpperCase()) {
             if (computerSecretWord.toUpperCase().includes(letter)) {
                 correctLetterRunningSum = correctLetterRunningSum + 1;
             }
