@@ -416,10 +416,10 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
             var indexMaker = "dbox" + (allDialogues.indexOf(item)+1);
 
             if (allDialogues.indexOf(item)+1 === allDialogues.length) {         // if this is the last entry in allDialogues, make an input
-                return <div key={randomKey} className="playerInputContainer" id={indexMaker}>
+                return <div key={randomKey} className="playerInputContainer">
                         <div tabIndex="0" className="playerInput" ref={whoGoesFirstInput}>
                             <div className="playerInputLeftCap">{item[1]}</div>
-                            <input defaultValue={item[2]}></input>
+                            <input id={indexMaker} defaultValue={item[2]}></input>
                             <div className="playerInputRightCap"></div>
                         </div>
                         <div className="playerInputSpace"></div>
