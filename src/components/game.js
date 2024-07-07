@@ -50,10 +50,22 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     }
 
 
+
+
+
+    
     const handleKeyDownTwo = (event) => {
+
 
         const collection = document.getElementsByTagName("input");
         const previousBoxes = allDialogues.slice(0,allDialogues.length-1);
+
+        if (collection[collection.length-1].value == "...") {
+            console.log("Check this out:");
+            console.log(document.getElementById("dbox"+allDialogues.length).value);
+            document.getElementById("dbox"+allDialogues.length).value = "";
+            console.log();
+        }
 
         if (document.getElementById("dbox"+allDialogues.length)) {
             document.getElementById("dbox"+allDialogues.length).focus();
@@ -135,8 +147,6 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                     dummyObject[latestComputerGuessWord] = parseInt(userFeedback);
                     setComputerGuessRecord(dummyObject);
 
-                    // setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer));
-
 
                     switch(userFeedback) {                      // change fox's eyes/expression based on response
                         case "5":
@@ -163,14 +173,12 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                     }
                     if (userFeedback === "5") {
                         setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Is my guess correct?","@Yes / No"] ));
-                        // setAllDialogues(allDialogues.slice(0,allDialogues.length).concat(["!* *Is my guess correct?","@Yes / No"]) );
                     } else {
                         setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
                     }
                     setGameStage("userGuess");
                 }
             }
-
 
 
 
