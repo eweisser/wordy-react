@@ -11,7 +11,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
 
     // const [currentUserInput, setCurrentUserInput] = useState("...");
     // const [whoGoesFirst, setWhoGoesFirst] = useState(null);
-    const [allDialogues, setAllDialogues] = useState([ "!* *Hi, I'm "+sendActiveAi+". Do you want to go first, or should I?","@Player goes first / Computer goes first"]);
+    const [allDialogues, setAllDialogues] = useState([ ["C","","Hi, I'm "+sendActiveAi+". Do you want to go first, or should I?"],["B",1,"Player goes first","Computer goes first"]]);
     const [gameStage, setGameStage] = useState("decide who goes first");
     const [computerSecretWord, setComputerSecretWord] = useState(".....");
     const [computerRoundCount, setComputerRoundCount] = useState(1);
@@ -56,33 +56,40 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     
     const handleKeyDownTwo = (event) => {
 
+        console.log("allDialogues:");
+        console.log(allDialogues);
+        console.log();
 
-        const collection = document.getElementsByTagName("input");
+
+        const all_inputBoxes = document.getElementsByTagName("input");
         const previousBoxes = allDialogues.slice(0,allDialogues.length-1);
 
-        if (collection[collection.length-1].value == "...") {
-            console.log("Check this out:");
-            console.log(document.getElementById("dbox"+allDialogues.length).value);
-            document.getElementById("dbox"+allDialogues.length).value = "";
-            console.log();
+        if (all_inputBoxes.length) {
+            if (all_inputBoxes[all_inputBoxes.length-1].value == "...") {
+                document.getElementById("dbox"+allDialogues.length).value = "";
+                // if most recent recent input box contains "...", and user types something, erase the "..."
+            }
         }
 
         if (document.getElementById("dbox"+allDialogues.length)) {
             document.getElementById("dbox"+allDialogues.length).focus();
         }
 
-        if (gameStage === "decide who goes first") {
+
+
+        if (gameStage === "decide who goes first") {    // before the user has chosen who goes first
             setComputerRoundCount(1);
             setUserRoundCount(1);
 
 
-        } else if (gameStage === "userGuess") {         // user's 5 letter guess
+
+
+        } else if (gameStage === "userGuess") {         // time for the user's 5 letter guess
 
             if (event.key === "Enter") {
-                console.log("secret word is...");
-                console.log(computerSecretWord);
-                var userGuessWord = collection[collection.length-1].value;
-                console.log();
+                // console.log("secret word is...");
+                // console.log(computerSecretWord);
+                var userGuessWord = all_inputBoxes[all_inputBoxes.length-1].value;
 
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
 
@@ -91,24 +98,21 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
 
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
                         setGameStage("gameOverUserWon");
-                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat(["!* *That's right! You guessed my word!","!* *What do you want to do now?","@Play this AI again / Play a different AI / Go to start menu"]));
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat([ ["C","","That's right! You guessed my word!"],["C","","What do you want to do now?"],["B",4,"Play this AI again","Play a different AI","Go to start menu"]]));
 
                     } else {
                         let roundCountAtCreation = computerRoundCount;
                         let whatToAdd = [];
                         if (userLetterCorrectNumber === 1 && computerGuessingOn) {
-                            whatToAdd = ["!* *You got 1 letter.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]];
+                            whatToAdd = [ ["C","","You got 1 letter."],["C",roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
                         } else if (computerGuessingOn) {
-                            whatToAdd = ["!* *You got " +userLetterCorrectNumber+ " letters.","!*"+roundCountAtCreation+"*My guess is "+computerPicksGuessWord().toUpperCase()+".",["U","","..."]];
+                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C",roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
                         } else if (userLetterCorrectNumber === 1) {
-                            whatToAdd = ["!* *You got 1 letter.","!*"+roundCountAtCreation+"*Guess again.",["U","","..."]];
+                            whatToAdd = [ ["C","","You got 1 letter."],["C",roundCountAtCreation,"Guess again."],["U","","..."]];
                         } else {
-                            whatToAdd = ["!* *You got " +userLetterCorrectNumber+ " letters.","!*"+roundCountAtCreation+"*Guess again.",["U","","..."]];
+                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C",roundCountAtCreation,"Guess again."],["U","","..."]];
                         }
                         setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat(whatToAdd));
-                        console.log("allDialogues:");
-                        console.log(allDialogues);
-                        console.log();
                         setComputerRoundCount(computerRoundCount+1);
                     }
                     if (computerGuessingOn) {
@@ -117,7 +121,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                     setUserRoundCount(userRoundCount+1);
                     
                 } else {            // if word is unacceptable...
-                    setAllDialogues(allDialogues.concat(["!* *Sorry, that word isn't in my dictionary. Try a different word.",["U"," ","..."]]) );
+                    setAllDialogues(previousBoxes.concat([ ["U",userRoundCount,userGuessWord],["C","","Sorry, that word isn't in my dictionary. Try a different word."],["U",userRoundCount,"..."]]) );
                 }
             }
 
@@ -138,8 +142,8 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
             //     setAllDialogues(allDialogues.slice(0,allDialogues.length-1).concat([newDialogueBox]) );
             // }
             if (event.key === "Enter") {
-                const userFeedback = collection[collection.length-1].value;
-                const dialogueBoxWithNewestUserAnswer = [["U"," ",userFeedback]];
+                const userFeedback = all_inputBoxes[all_inputBoxes.length-1].value;
+                const dialogueBoxWithNewestUserAnswer = [ ["U"," ",userFeedback] ];
 
                 if (userFeedback.charCodeAt(0) >= 48 && userFeedback.charCodeAt(0) <= 53) {
                     
@@ -172,9 +176,9 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                             break;
                     }
                     if (userFeedback === "5") {
-                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Is my guess correct?","@Yes / No"] ));
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,[["C","","Is my guess correct?"],["B",2,"Yes","No"] ] ));
                     } else {
-                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,[["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
                     }
                     setGameStage("userGuess");
                 }
@@ -183,12 +187,13 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
 
 
             // end of game stage = computerGuess
-        } else if (gameStage === "game ended, before erasing") {
-            if (event.key === "Enter") {
-                setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.",["U","","..."]]);
-                setGameStage("decide who goes first");
-            }
         }
+        // else if (gameStage === "game ended, before erasing") {
+        //     if (event.key === "Enter") {
+        //         setAllDialogues(["!* *Enter 1 if you want to go first, or 2 for me to go first.",["U","","..."]]);
+        //         setGameStage("decide who goes first");
+        //     }
+        // }
       };    // end of handleKeyDown
 
 
@@ -341,17 +346,18 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     const whoGoesFirstChoice = (whosFirst) => {
         if (whosFirst === "user") {
             setGameStage("userGuess");
-            setAllDialogues(allDialogues.concat(["!* *Okay, you'll go first. Enter your guess whenever you're ready.",["U",userRoundCount,"..."]]) );
+            setAllDialogues(allDialogues.concat([ ["C","","Okay, you'll go first. Enter your guess whenever you're ready."],["U",userRoundCount,"..."] ]) );
         } else if (whosFirst === "computer") {
             latestComputerWordChoice = computerPicksGuessWord();
             setGameStage("computerGuess");
-            setAllDialogues(allDialogues.concat(["!* *Okay, I'll go first. Let's see...","!*1*My guess is "+latestComputerWordChoice.toUpperCase()+".",["U","","..."]]) );
+            setAllDialogues(allDialogues.concat([ ["C","","Okay, I'll go first. Let's see..."],["C",1,"My guess is "+latestComputerWordChoice.toUpperCase()+"."],["U","","..."] ]) );
+            setComputerRoundCount(computerRoundCount+1);
         }
     }
 
     const restartGame = () => {
         setGameStage("game ended, before erasing");
-        setAllDialogues(allDialogues.concat(["!**Okay, press enter and I'll erase the previous game.","..."]) );
+        setAllDialogues(allDialogues.concat([ ["C","","Okay, press enter and I'll erase the previous game.","..."] ]) );
     }
 
     const whoGoesFirstInput = useCallback((inputElement) => {
@@ -361,16 +367,16 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     }, []);
 
     const afterNonWinningComputerGuess = () => {
-        setAllDialogues(allDialogues.concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
+        setAllDialogues(allDialogues.concat([["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
     }
 
     const afterWinningComputerGuess = () => {
-        setAllDialogues(allDialogues.concat(["!* *Okay, what now?","@Keep guessing the computer's word / Play this AI again / Main menu"] ));
+        setAllDialogues(allDialogues.concat([ ["C","","Okay, what now?"],["B",3,"Keep guessing the computer's word","Play this AI again","Main menu"] ]));
     }
 
     const continueGuessingWhenComputerWins = () => {
         setComputerGuessingOn(false);
-        setAllDialogues(allDialogues.concat(["!* *Okay, what's your guess?",["U",userRoundCount,"..."]] ));
+        setAllDialogues(allDialogues.concat([ ["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
     }
 
 
@@ -379,45 +385,91 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     const makeDialogueBox = (item) => {
         sendGuessLog(allDialogues);
         const randomKey = Math.random();
-        if (item[0] === "!") {          // if it starts with "!", it's a computer dialogue box
+
+        if (item[0] === "C") {
             return <div key={randomKey} className="compDialogueContainer">
                         <div className="compDialogueSpace"></div>
                         <div className="compDialogue">
                             <div className="compDialogueLeftCap"></div>
-                            {item.split("*")[2]}
-                            <div className="compDialogueRightCap">{item.split("*")[1]}</div>
+                            {item[2]}
+                            <div className="compDialogueRightCap">{item[1]}</div>
                         </div>
                     </div>
 
 
-        } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
-            if (item.split("/")[0] === "@Player goes first ") {
-                return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                            <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("computer")}>{item.split("/")[1]}</div>
+
+
+
+
+
+        } else if (item[0] === "B") {
+            switch (item[1]) {
+                case 1:
+                    return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                            <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item[2]}</div>
+                            <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("computer")}>{item[3]}</div>
                             <div className="playerInputSpace"></div>
-                        </div>
-            } else if (item.split("/")[0] === "@Yes ") {
-                return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                            <div className="playerOptionBox" onClick={() => afterWinningComputerGuess()}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item.split("/")[1]}</div>
+                            </div>
+                    break;
+                case 2:
+                    return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                            <div className="playerOptionBox" onClick={() => afterWinningComputerGuess()}>{item[2]}</div>
+                            <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item[3]}</div>
                             <div className="playerInputSpace"></div>
-                        </div>
-            } else if (item.split("/")[0] === "@Keep guessing the computer's word ") {
-                return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                            <div className="playerOptionBox" onClick={() => continueGuessingWhenComputerWins()}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[1]}</div>
-                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
+                            </div>
+                    break;
+                case 3:
+                    return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                            <div className="playerOptionBox" onClick={() => continueGuessingWhenComputerWins()}>{item[2]}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item[3]}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item[4]}</div>
                             <div className="playerInputSpace"></div>
-                        </div>
-            } else if (item.split("/")[0] === "@Play this AI again ") {
-                return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
-                            <div className="playerOptionBox" onClick={restartGame}>{item.split("/")[0].slice(1)}</div>
-                            <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item.split("/")[1]}</div>
-                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
+                            </div>
+                    break;
+                case 4:
+                    return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+                            <div className="playerOptionBox" onClick={restartGame}>{item[2]}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item[3]}</div>
+                            <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item[4]}</div>
                             <div className="playerInputSpace"></div>
-                        </div>
+                            </div>
+                    break;
+                default:
+                    break;
             }
+
+
+
+
+
+        // } else if (item[0] === "@") {   // if it starts with "@", it's a set of player option boxes
+            // if (item.split("/")[0] === "@Player goes first ") {
+            //     return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+            //                 <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("user")}>{item.split("/")[0].slice(1)}</div>
+            //                 <div className="playerOptionBox" onClick={() => whoGoesFirstChoice("computer")}>{item.split("/")[1]}</div>
+            //                 <div className="playerInputSpace"></div>
+            //             </div>
+            // } else if (item.split("/")[0] === "@Yes ") {
+            //     return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+            //                 <div className="playerOptionBox" onClick={() => afterWinningComputerGuess()}>{item.split("/")[0].slice(1)}</div>
+            //                 <div className="playerOptionBox" onClick={() => afterNonWinningComputerGuess()}>{item.split("/")[1]}</div>
+            //                 <div className="playerInputSpace"></div>
+            //             </div>
+            // } else if (item.split("/")[0] === "@Keep guessing the computer's word ") {
+            //     return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+            //                 <div className="playerOptionBox" onClick={() => continueGuessingWhenComputerWins()}>{item.split("/")[0].slice(1)}</div>
+            //                 <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[1]}</div>
+            //                 <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
+            //                 <div className="playerInputSpace"></div>
+            //             </div>
+            // } else if (item.split("/")[0] === "@Play this AI again ") {
+            //     return <div tabIndex="0" key={randomKey} ref={whoGoesFirstInput} className="playerOptionBoxesContainer">
+            //                 <div className="playerOptionBox" onClick={restartGame}>{item.split("/")[0].slice(1)}</div>
+            //                 <div className="playerOptionBox" onClick={() => newGamePickAi(true)}>{item.split("/")[1]}</div>
+            //                 <div className="playerOptionBox" onClick={() => newGamePickAi(false)}>{item.split("/")[2]}</div>
+            //                 <div className="playerInputSpace"></div>
+            //             </div>
+            // }
 
 
         } else {                        // if it doesn't start with "!" or "@", it's a player input box
