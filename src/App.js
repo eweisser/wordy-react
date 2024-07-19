@@ -5,6 +5,7 @@ import Game from './components/game.js';
 import Fox from './components/fox.js';
 import ScratchPad from './components/scratchpad.js';
 import SaveButton from './components/savebutton.js';
+import MainMenuButton from './components/main-menu-button.js';
 import './App.css';
 import { useState } from 'react';
 import AIMenuButton from './components/AI-menu-button.js';
@@ -176,7 +177,8 @@ function App() {
           </ScratchPad>}
 
           {alphabetAppear && <SaveButton triggerSave={downloadTxtFile}>
-          </SaveButton>}
+          </SaveButton> && <MainMenuButton triggerBackToMainMenu={downloadTxtFile}>
+          </MainMenuButton>}
 
         </div>
 

@@ -272,7 +272,7 @@ div:focus {
 
 #fox {
   /* background-color: #00f2; */
-  /* border: 2px dashed #00f1; */
+  border: 2px dashed #00f3;
   height: 20vw;
   width: 20vw;
   margin: auto;
@@ -281,7 +281,7 @@ div:focus {
 #scratchpad-container {
   align-items: center;
   /* background-color: #0f02; */
-  /* border: 2px dashed #00f1; */
+  border: 2px dashed #00f3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(6, 1fr);
@@ -334,7 +334,16 @@ div:focus {
 
 #save-button {
   align-items: center;
-  /* border: 2px dashed #00f1; */
+  border: 2px dashed #00f3;
+  font-size: 1.4vw;
+  margin: auto;
+  margin-top: 30px;
+  width: 20vw;
+}
+
+#main-menu-button {
+  align-items: center;
+  border: 2px dashed #00f3;
   font-size: 1.4vw;
   margin: auto;
   margin-top: 30px;
