@@ -175,10 +175,11 @@ function App() {
             {mappedScratchpadLettersObject}
             <ScratchPadResetButton Label={resetStatus} cycleResetButton={() => {handleReset()}}> </ScratchPadResetButton>
           </ScratchPad>}
-
-          {alphabetAppear && <SaveButton triggerSave={downloadTxtFile}>
-          </SaveButton> && <MainMenuButton triggerBackToMainMenu={downloadTxtFile}>
-          </MainMenuButton>}
+          
+          {alphabetAppear && <div className="save-and-back">
+            <SaveButton triggerSave={downloadTxtFile}></SaveButton>
+            <MainMenuButton triggerBackToMainMenu={() => {setStartMenuAppear(true); setGameAppear(false); setAlphabetAppear(false)}}></MainMenuButton>
+          </div>}
 
         </div>
 

@@ -1,11 +1,10 @@
 import '../App.css';
 
-const SaveButton = ({triggerSave, children}) => {
+const SaveButton = ({triggerSave}) => {
 
     return (
         <div id="save-button" onClick={triggerSave}>
             save
-            {/* {children} */}
         </div>
     );
 }
