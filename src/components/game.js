@@ -49,6 +49,13 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
         setComputerSecretWord(activeLexicon[(Math.floor(Math.random()*activeLexicon.length))]);
     }
 
+    console.log("The variables:");
+    console.log(allDialogues);
+    console.log(gameStage);
+    console.log(userRoundCount);
+    console.log(computerGuessingOn);
+    console.log("");
+
 
 
 

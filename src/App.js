@@ -30,6 +30,7 @@ function App() {
   const [startMenuAppear, setStartMenuAppear] = useState(true);
   const [aiMenuAppear, setAiMenuAppear] = useState(false);
   const [gameAppear, setGameAppear] = useState(false);
+  const [gameVisibility, setGameVisibility] = useState(false);
   const [howToPlayAppear, setHowToPlayAppear] = useState(false);
   const [optionsAppear, setOptionsAppear] = useState(false);
   const [alphabetAppear, setAlphabetAppear] = useState(false);
@@ -120,7 +121,7 @@ function App() {
     {timerGo && <Timer zeroFace={() => {resetFace();}} />}
     <div className="App">
       <div className="LeftFrame">
-        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setAiMenuAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
+        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setGameAppear(false); setAiMenuAppear(true)}} goToResumedGame={() => {setStartMenuAppear(false); document.getElementById("game").style.display = "block"; setAlphabetAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
 
         {aiMenuAppear && <AIMenu>
           <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
@@ -178,7 +179,7 @@ function App() {
           
           {alphabetAppear && <div className="save-and-back">
             <SaveButton triggerSave={downloadTxtFile}></SaveButton>
-            <MainMenuButton triggerBackToMainMenu={() => {setStartMenuAppear(true); setGameAppear(false); setAlphabetAppear(false)}}></MainMenuButton>
+            <MainMenuButton triggerBackToMainMenu={() => {setStartMenuAppear(true); document.getElementById("game").style.display = "none"; setAlphabetAppear(false)}}></MainMenuButton>
           </div>}
 
         </div>
