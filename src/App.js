@@ -109,7 +109,13 @@ function App() {
     element.click();
   }
 
-
+  const handleResumeGame = () => {
+    if (document.getElementById("game")) {
+      setStartMenuAppear(false);
+      document.getElementById("game").style.display = "block";
+      setAlphabetAppear(true);
+    }
+  }
 
 
 
@@ -121,7 +127,7 @@ function App() {
     {timerGo && <Timer zeroFace={() => {resetFace();}} />}
     <div className="App">
       <div className="LeftFrame">
-        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setGameAppear(false); setAiMenuAppear(true)}} goToResumedGame={() => {setStartMenuAppear(false); document.getElementById("game").style.display = "block"; setAlphabetAppear(true)}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
+        {startMenuAppear && <StartMenu showAiMenu={() => {setStartMenuAppear(false); setGameAppear(false); setAiMenuAppear(true)}} goToResumedGame={() => {handleResumeGame()}} showHowToPlay={() => {setStartMenuAppear(false); setHowToPlayAppear(true); setAlphabetAppear(true)} } showOptions={() => {setStartMenuAppear(false); setOptionsAppear(true); setAlphabetAppear(false)} } />}
 
         {aiMenuAppear && <AIMenu>
           <AIMenuButton AiName="Amy" pickAi={() => {setActiveAi("Amy"); setAiMenuAppear(false); setGameAppear(true); setAlphabetAppear(true)}}></AIMenuButton>
