@@ -100,7 +100,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
 
                 if (activeLexicon.includes(userGuessWord.toLowerCase()) || userGuessWord === "XXXXX") {     // if word is acceptable...
 
-                    const dialogueBoxWithNewestUserGuess = [["U",userRoundCount,userGuessWord]];
+                    const dialogueBoxWithNewestUserGuess = [["U","guess "+userRoundCount,userGuessWord]];
                     var userLetterCorrectNumber = computerEvaluatesUserGuess(userGuessWord);
 
                     if (userGuessWord.toLowerCase() === computerSecretWord || userGuessWord === "XXXXX") {
@@ -111,13 +111,13 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                         let roundCountAtCreation = computerRoundCount;
                         let whatToAdd = [];
                         if (userLetterCorrectNumber === 1 && computerGuessingOn) {
-                            whatToAdd = [ ["C","","You got 1 letter."],["C",roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
+                            whatToAdd = [ ["C","","You got 1 letter."],["C","guess "+roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
                         } else if (computerGuessingOn) {
-                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C",roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
+                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C","guess "+roundCountAtCreation,"My guess is "+computerPicksGuessWord().toUpperCase()+"."],["U","","..."]];
                         } else if (userLetterCorrectNumber === 1) {
-                            whatToAdd = [ ["C","","You got 1 letter."],["C",roundCountAtCreation,"Guess again."],["U","","..."]];
+                            whatToAdd = [ ["C","","You got 1 letter."],["C","guess "+roundCountAtCreation,"Guess again."],["U","","..."]];
                         } else {
-                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C",roundCountAtCreation,"Guess again."],["U","","..."]];
+                            whatToAdd = [ ["C","","You got " +userLetterCorrectNumber+ " letters."],["C","guess "+roundCountAtCreation,"Guess again."],["U","","..."]];
                         }
                         setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserGuess).concat(whatToAdd));
                         setComputerRoundCount(computerRoundCount+1);
@@ -128,7 +128,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                     setUserRoundCount(userRoundCount+1);
                     
                 } else {            // if word is unacceptable...
-                    setAllDialogues(previousBoxes.concat([ ["U",userRoundCount,userGuessWord],["C","","Sorry, that word isn't in my dictionary. Try a different word."],["U",userRoundCount,"..."]]) );
+                    setAllDialogues(previousBoxes.concat([ ["U","guess "+userRoundCount,userGuessWord],["C","","Sorry, that word isn't in my dictionary. Try a different word."],["U","guess "+userRoundCount,"..."]]) );
                 }
             }
 
@@ -185,7 +185,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
                     if (userFeedback === "5") {
                         setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,[["C","","Is my guess correct?"],["B",2,"Yes","No"] ] ));
                     } else {
-                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,[["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
+                        setAllDialogues(previousBoxes.concat(dialogueBoxWithNewestUserAnswer,[["C","","Okay, what's your guess?"],["U","guess "+userRoundCount,"..."]] ));
                     }
                     setGameStage("userGuess");
                 }
@@ -353,7 +353,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     const whoGoesFirstChoice = (whosFirst) => {
         if (whosFirst === "user") {
             setGameStage("userGuess");
-            setAllDialogues(allDialogues.concat([ ["C","","Okay, you'll go first. Enter your guess whenever you're ready."],["U",userRoundCount,"..."] ]) );
+            setAllDialogues(allDialogues.concat([ ["C","","Okay, you'll go first. Enter your guess whenever you're ready."],["U","guess "+userRoundCount,"..."] ]) );
         } else if (whosFirst === "computer") {
             latestComputerWordChoice = computerPicksGuessWord();
             setGameStage("computerGuess");
@@ -374,7 +374,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
     }, []);
 
     const afterNonWinningComputerGuess = () => {
-        setAllDialogues(allDialogues.concat([["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
+        setAllDialogues(allDialogues.concat([["C","","Okay, what's your guess?"],["U","guess "+userRoundCount,"..."]] ));
     }
 
     const afterWinningComputerGuess = () => {
@@ -383,7 +383,7 @@ const Game = ({sendActiveAi, newGamePickAi, sendMoodFromGameToApp, sendGuessLog,
 
     const continueGuessingWhenComputerWins = () => {
         setComputerGuessingOn(false);
-        setAllDialogues(allDialogues.concat([ ["C","","Okay, what's your guess?"],["U",userRoundCount,"..."]] ));
+        setAllDialogues(allDialogues.concat([ ["C","","Okay, what's your guess?"],["U","guess "+userRoundCount,"..."]] ));
     }
 
 
